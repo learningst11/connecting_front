@@ -1,0 +1,51 @@
+.pg_myinfo main { padding: 55px 20px 0; } 
+.pg_myinfo main .middle { margin-top: 30px; } 
+.pg_myinfo main .middle p { font-size: 24px; font-weight: 700; line-height: 30px; white-space: pre-line; } 
+.pg_myinfo main .middle p span{ color: var(--connectors-main-color, #6E4DDC);
+  font-size: 24px;
+  font-weight: 700;
+  margin-right: 2px;
+}
+.pg_myinfo main .bottom { margin-top: 30px; } 
+.pg_myinfo main .bottom .wrap_label { display: flex; flex-direction: column; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(1):before { display: block; content: attr(title); font-size: 13px; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(1) { position: relative; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(1) input { width: 100%; height: 50px; background-color: var(--bg); border: none; font-size: 14px; padding: 15px 10px; margin-top: 8px; outline: none; border-radius: 8px; } 
+.pg_myinfo main .bottom .wrap_label button{ position: absolute; top: 32px; right: 20px; width: 70px; height:35px; border-radius: 5px;
+  border: 1px solid var(--gray-gray-04, #CDCDCD);}
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(2) { margin-top: 18px; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(2):before { display: block; content: attr(title); font-size: 13px; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(2) { position: relative; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(2) input { width: 100%; height: 50px; background-color: var(--bg); border: none; font-size: 14px; padding: 15px 10px; margin-top: 8px; outline: none; border-radius: 8px; } 
+.pg_myinfo > button.active { background: var(--primary); } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(3) { position: relative; margin-top: 18px; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(3) input {width: 100%; height: 50px; background-color: var(--bg); border: none; font-size: 14px; padding: 15px 10px; margin-top: 8px; outline: none; border-radius: 8px } 
+.pg_myinfo main .bottom .wrap_label label[title="인증 번호"] { display: none; } 
+.pg_myinfo main .bottom .wrap_label label[title="인증 번호"].active { display: block; } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(3)::before { display: block; content: attr(title); } 
+.pg_myinfo main .bottom .wrap_label label:nth-of-type(3) .timer { position: absolute; top: 45px; right: 20px; color: var(--purple-400, #8b71e3); text-align: center; font-size: 12px; font-weight: 400; text-decoration: none; } 
+
+
+/* change_mobile */
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(1) { position: relative; display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; height: 50px; font-size: 13px; font-weight: 500; background: var(--bg); border-radius: 8px; padding: 15px 10px; margin-top: 30px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(1):before { position: absolute; display: block; content: "이용약관 동의"; top: -28px; left: 0; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label input[type="checkbox"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; background: #fff; border: 1px solid #cdcdcd; border-radius: 4px; cursor: pointer; height: 18px; outline: 0; width: 18px; padding: 0; margin: 0; margin-left: 10px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label input[type="checkbox"]::after { border: solid #cdcdcd; border-width: 0 2px 2px 0; content: ""; display: none; height: 40%; left: 40%; position: relative; top: 20%; transform: rotate(45deg); width: 15%; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label input[type="checkbox"]:checked { background: #fff; border-color: #6e4ddc; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label input[type="checkbox"]:checked::after { border-color: #6e4ddc; display: block; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label #chkAll:checked + span { color: #fff; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label { display: flex; flex-direction: column; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label span { text-decoration: underline; font-size: 13px; font-weight: 400; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(2) { margin-top: 10px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(2):before { display: block; content: attr(title); font-size: 13px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(2) { position: relative; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(2) input { width: 100%; height: 50px; background-color: var(--bg); border: none; font-size: 14px; padding: 15px 10px; margin-top: 8px; outline: none; border-radius: 8px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(2) button { width: auto; position: absolute; top: 32px; right: 20px; border-radius: 500px; border: 1px solid var(--gray-gray-04, #cdcdcd); background: #fff; padding: 5px; font-size: 12px; } 
+.pg_myinfo.change_mobile > button { border-radius: 8px; background-color: #cdcdcd; color: var(--basic-white, #fff); font-size: 20px; font-weight: 600; outline: none; } 
+.pg_myinfo.change_mobile > button.active { background: var(--primary); } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(3) { position: relative; margin-top: 20px; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(3) input { width: 100%; height: 50px; border-radius: 8px; border: 1px solid var(--purple-400, #8b71e3); padding-left: 10px; margin-top: 8px; outline: none; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label[title="인증 번호"] { display: none; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label[title="인증 번호"].active { display: block; } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(3)::before { display: block; content: attr(title); } 
+.pg_myinfo.change_mobile main .bottom .wrap_label label:nth-of-type(3) .timer { position: absolute; top: 45px; right: 20px; color: var(--purple-400, #8b71e3); text-align: center; font-size: 12px; font-weight: 400; text-decoration: none; } 

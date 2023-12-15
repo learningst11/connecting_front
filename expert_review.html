@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <link rel="shortcut icon" href="/public/img/common/img_favicon.ico" type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/expert_detail.css">
+
+    <!-- js -->
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="./js/common.js"></script>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelector('.sort_output').addEventListener('click', function() {
+                document.querySelector('.wrap_popup').style.display = 'block';
+                document.querySelector('.popup').style.display = 'block';
+            });
+
+            document.querySelectorAll('.popup ul li').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    var selectedText = this.innerText;
+                    var select = document.getElementById('sort_origin');
+
+                    for (var i = 0; i < select.options.length; i++) {
+                        if (select.options[i].text === selectedText) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    document.querySelector('.sort_output').textContent = selectedText;
+
+                    document.querySelector('.wrap_popup').style.display = 'none';
+                    document.querySelector('.popup').style.display = 'none';
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                var isClickInsidePopup = document.querySelector('.popup').contains(event.target);
+                var isClickInsideSortOutput = document.querySelector('.sort_output') === event.target;
+
+                if (!isClickInsidePopup && !isClickInsideSortOutput) {
+                    document.querySelector('.wrap_popup').style.display = 'none';
+                    document.querySelector('.popup').style.display = 'none';
+                }
+            });
+
+        });
+
+    </script>
+</head>
+
+<body class="pg_expert_review">
+    <header>
+        <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
+        <h1><img src="./img/common/logo.png" alt="logo"></h1>
+        <img src="./img/common/user_gray.svg" alt="user_gray">
+    </header>
+    <main>
+
+        <section>
+
+            <div class="wrap wrap05">
+
+                <div class="flexbox_h2">
+                    <h3>Kim Romano 전문가 후기</h3>
+                    <div class="wrap_star">
+                        <img src="./img/common/star.svg" alt="star">
+                        <img src="./img/common/star.svg" alt="star">
+                        <img src="./img/common/star.svg" alt="star">
+                        <img src="./img/common/star_empty.svg" alt="star_empty">
+                        <img src="./img/common/star_empty.svg" alt="ratstar_emptying_empty">
+                    </div>
+                    <p>5.0 <span>(332)</span></p>
+                </div>
+
+                <select name="" id="sort_origin" style="display:none;">
+                    <option value="latest">별점 높은 순</option>
+                    <option value="review">별점 낮은 순</option>
+                    <option value="review">최신 순</option>
+                </select>
+                <div class="wrap_sort_output">
+                    <span class="sort_output">별점 높은 순</span>
+                </div>
+            
+                <div class="wrap_popup">
+                    <div class="popup">
+                        <p>정렬</p>
+                        <ul>
+                            <li>별점 높은 순</li>
+                            <li>별점 낮은 순</li>
+                            <li>최신순</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="wrap_item">
+
+                    <div class="item">
+                        <div class="flexbox">
+                            <div class="wrap_star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star_empty.svg" alt="star_empty">
+                                <img src="./img/common/star_empty.svg" alt="ratstar_emptying_empty">
+                            </div>
+                            <span>라**</span>
+                        </div>
+                        <p>사전질문에 대한 답변도 너무 잘 준비해주세고, 회사와 상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신사전질문에 대한 답변도 너무
+                            잘 준비해주세고, 회사와 상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신사전질문에 대한 답변도 너무 잘 준비해주세고, 회사와
+                            상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신</p>
+                        <span>2023. 07. 18</span>
+                    </div>
+
+                    <div class="item">
+                        <div class="flexbox">
+                            <div class="wrap_star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star.svg" alt="star">
+                                <img src="./img/common/star_empty.svg" alt="star_empty">
+                                <img src="./img/common/star_empty.svg" alt="star_empty">
+                            </div>
+                            <span>라**</span>
+                        </div>
+                        <p>사전질문에 대한 답변도 너무 잘 준비해주세고, 회사와 상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신사전질문에 대한 답변도 너무
+                            잘 준비해주세고, 회사와 상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신사전질문에 대한 답변도 너무 잘 준비해주세고, 회사와
+                            상품을 조사하는데 생각치 못한 답변 제안해주셔서 너무나도 감사했어요 특히나 추천해주신</p>
+                        <span>2023. 07. 18</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="wrap wrap05 none">
+                <div class="wrap_empty">
+                    <img src="./img/common/review_empty.svg" alt="empty">
+                    <p>아직 후기가 없어요!</p>
+                </div>
+            </div>
+
+            <div class="wrap_bottom">
+                <button type="button" onclick="location.href='./pay.html'">예약하기</button>
+                <div class="wrap_like">
+                    <img src="./img/common/like_gray_fill.svg" alt="like_gray_fill">
+                    <span>찜하기</span>
+                </div>
+            </div>
+
+
+        </section>
+
+    </main>
+</body>
+
+</html>

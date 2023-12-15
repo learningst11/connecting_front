@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <link rel="shortcut icon" href="/public/img/common/img_favicon.ico" type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/mypage.css">
+
+    <!-- js -->
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="./js/common.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            var tabs = document.querySelectorAll('.wrap_tab li');
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (tab) {
+                        tab.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    toggleSections(index);
+                });
+            });
+
+        });
+
+        function toggleSections() {
+
+            var expertSection = document.querySelector('.paid');
+            var contentsSection = document.querySelector('.refunded');
+
+            if (expertSection.style.display === 'none') {
+                expertSection.style.display = 'block';
+                contentsSection.style.display = 'none';
+            } else {
+                expertSection.style.display = 'none';
+                contentsSection.style.display = 'block';
+            }
+
+        }
+    </script>
+</head>
+
+<body class="pg_mypage_pay">
+    <header>
+        <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
+        <h1>구매관리</h1>
+        <span></span>
+    </header>
+    <main>
+
+        <ul class="wrap_tab">
+            <li class="active">결제 완료</li>
+            <li>환불 완료</li>
+        </ul>
+
+        <section class="paid">
+
+            <div class="wrap_item">
+
+                <p>2023.08.21</p>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>결제금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>결제금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wrap_item">
+
+                <p>2023.08.21</p>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>결제금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>결제금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <section class="refunded">
+
+            <div class="wrap_item">
+
+                <p>2023.08.21</p>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>환불금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>환불금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wrap_item">
+
+                <p>2023.08.21</p>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>환불금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p><span>김장현</span> 전문가</p>
+                            <p>화상 20분 상담권</p>
+                            <p>2023.11.04(토) 14:00:32</p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <p>환불금액 | <span>14,900원</span></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+    </main>
+</body>
+
+</html>
+
+
+

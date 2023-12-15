@@ -1,0 +1,158 @@
+@charset "UTF-8";
+@font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Thin.woff2") format("woff2");
+    font-weight: 100; 
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-ExtraLight.woff2") format("woff2");
+    font-weight: 200;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2") format("woff2");
+    font-weight: 300; 
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2") format("woff2");
+    font-weight: 400; 
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2") format("woff2");
+    font-weight: 500; 
+    font-style: normal;
+  } 
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-SemiBold.woff2") format("woff2");
+    font-weight: 600; 
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-ExtraBold.woff2") format("woff2");
+    font-weight: 800; 
+    font-style: normal;
+  }
+  @font-face {
+    font-family: SUIT;
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Heavy.woff2") format("woff2");
+    font-weight: 900; 
+    font-style: normal;
+  }
+  
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&display=swap");
+
+html,
+body {
+  width: 100%;
+  background-color: #fff;
+}
+
+/**********************************************/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: SUIT;
+  font-size: 14px;
+  color: #222222;
+}
+li {
+  list-style: none;
+}
+a {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+span {
+  display: inline-block;
+}
+strong,
+b {
+  font-weight: bold;
+}
+strong {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+img {
+  display: inline-block;
+  border: none;
+  object-fit: contain;
+}
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+textarea {
+  resize: none;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+details {
+  list-style: none;
+}
+details::-webkit-details-marker {
+  display: none;
+}
+summary {
+  cursor: pointer;
+}
+
+/* input[type="text"], input[type="password"]{ text-indent: 14px;} */
+input[type="text"]::placeholder {
+  color: var(--gray-gray-03, #999);
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+}
+input[type="radio"] {
+  cursor: pointer;
+}
+input[type="search"] {
+  padding: 0 16px;
+}
+
+/**********************************************/
+
+@media only screen and (min-width: 1024px) {
+  .mobile {
+    display: none;
+  }
+  .pc {
+    display: block;
+  }
+}

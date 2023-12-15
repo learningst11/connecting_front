@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/sign.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var togglePassword01 = document.querySelector('.toggle_pw01');
+            togglePassword01.addEventListener('click', function () {
+                var passwordInput01 = document.getElementById('password01');
+                var type = passwordInput01.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput01.setAttribute('type', type);
+                this.src = type === 'text' ? './img/signup/eye_purple.svg' : './img/signup/eye_gray.svg';
+            });
+
+
+        });
+
+
+        function validateForm() {
+            var email = document.getElementById('id').value;
+            var password = document.getElementById('password01').value;
+
+            if (email === '' || password === '') {
+                Swal.fire({
+                    html: '이메일 주소 및 비밀번호를<br> 다시 확인해주세요.'
+                });
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+
+</head>
+
+<body class="pg_sign sign_in_email">
+
+    <header>
+        <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
+        <h1>이메일 로그인</h1>
+        <span></span>
+    </header>
+
+    <main>
+
+        <div class="middle">
+            <p>이메일 주소와
+                비밀번호를 입력해주세요.</p>
+        </div>
+
+        <div class="bottom">
+
+            <div class="wrap_label">
+
+                <label class="label">
+                    <input type="text" id="id" placeholder="이메일 주소 입력">
+                </label>
+
+                <label class="label">
+                    <input type="password" id="password01" placeholder="비밀번호 입력">
+                    <img src="./img/signup/eye_gray.svg" alt="eye_gray" class="toggle_pw01">
+                </label>
+
+                <div class="flexbox">
+
+                    <label class="auto_login">
+                        <input type="checkbox">자동 로그인
+                    </label>
+
+                    <div class="wrap_a">
+                        <a href="./find_id.html">아이디 찾기</a>
+                        <span>|</span>
+                        <a href="./find_pw.html">비밀번호 찾기</a>
+                    </div>
+
+                </div>
+
+                <button type="button" class="btn_action" id="btnSignIn">로그인</button>
+
+            </div>
+
+        </div>
+
+        <div class="bottom_add">
+
+            <div class="wrap_text">
+                <hr>
+                <span>또는</span>
+                <hr>
+            </div>
+
+            <div class="wrap_img">
+                <img src="./img/signup/bottom_add_kakao.svg" alt="bottom_add_kakao">
+                <img src="./img/signup/bottom_add_google.png" alt="bottom_add_google">
+            </div>
+
+            <p>커넥터즈가 처음이신가요?<a href="./sign_up01.html">회원가입</a></p>
+
+        </div>
+
+    </main>
+
+
+
+
+</body>
+
+</html>

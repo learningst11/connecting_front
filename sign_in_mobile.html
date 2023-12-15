@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/sign.css">
+
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // alert
+            document.querySelector(".btn_action").addEventListener("click", function(e) {
+                    Swal.fire({
+                    html: '이메일 주소 및 비밀번호를<br> 다시 확인해주세요.'
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                
+                        };
+                    });
+                });
+
+            document.querySelector(".btn_action").addEventListener("click", function(e) {
+                Swal.fire({
+                html: ' 휴대폰 인증이<br>완료되었습니다.'
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+            
+                    };
+                });
+            });
+
+            // chk
+            var chkAll = document.getElementById('chkAll');
+            var labelForChkAll = document.querySelector('label[for="chkAll"]');
+    
+            chkAll.addEventListener('change', function() {
+                labelForChkAll.style.backgroundColor = chkAll.checked ? '#8B71E3' : '';
+            });
+
+
+            // btn
+            var actionBtn = document.querySelector('.btn-action');
+
+            
+
+            document.getElementById('numberInput').addEventListener('focus', function() {
+                document.querySelector('.btn_action').style.display = 'none'; 
+            });
+
+            document.getElementById('numberInput').addEventListener('blur', function() {
+                    document.querySelector('.btn_action').style.display = 'block'; 
+             });
+
+
+
+
+        });
+
+
+
+    </script>
+
+</head>
+
+<body class="pg_sign sign_in_mobile">
+
+    <main>
+        <div class="top">
+            <a href=""><img src="./img/common/back.svg" alt="back"></a>
+            <h1>회원가입</h1>
+            <span></span>
+        </div>
+
+        <div class="middle">
+            <p>안전한 보호를 위해 
+                휴대폰 인증을 진행해주세요.</p>
+        </div>
+
+        <div class="bottom">
+
+            <div class="wrap_label">
+
+                <label class="label" for="chkAll">
+                    <input type="checkbox" id="chkAll">
+                    <span>이용약관에 모두 동의합니다.</span>
+                </label>
+
+                <label title="휴대폰 번호">
+                    <input type="text" placeholder="-없이 숫자만 입력">
+                    <button type="button">인증번호 요청</button>
+                </label>
+
+                <label title="인증 번호">
+                    <input type="text" placeholder="인증번호 입력" id="numberInput">
+                    <span class="timer">02:56</span>
+                </label>
+
+            </div>
+            
+            
+        </div>
+        
+    </main>
+    
+    <button type="button" class="btn_action">인증완료</button>
+    
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEST</title>
+
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/sign.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+
+  <script src="./js/jquery-3.6.1.min.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var togglePassword01 = document.querySelector('.toggle_pw01');
+      togglePassword01.addEventListener('click', function () {
+        var passwordInput01 = document.getElementById('password01');
+        var type = passwordInput01.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput01.setAttribute('type', type);
+        this.src = type === 'text' ? '/img/signup/eye_purple.svg' : '/img/signup/eye_gray.svg';
+      });
+
+      var togglePassword02 = document.querySelector('.toggle_pw02');
+      togglePassword02.addEventListener('click', function () {
+        var passwordInput02 = document.getElementById('password02');
+        var type = passwordInput02.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput02.setAttribute('type', type);
+        this.src = type === 'text' ? '/img/signup/eye_purple.svg' : '/img/signup/eye_gray.svg';
+      });
+
+      $('#btnSignUp').on('click', async function () {
+
+        if (!validateForm()) {
+          return;
+        }
+
+        var email = $('#id').val();
+        var password = $('#password01').val();
+
+        try {
+          const response = await fetch("http://43.201.79.49/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              terms: true
+            })
+          });
+
+          const data = await response.json();
+
+          if (data.code === 200) {
+            console.log(data);
+            // window.location.href = './home.html';
+          } else {
+            console.log(data);
+            Swal.fire({
+              html: '회원가입에 실패하였습니다.'
+            });
+          }
+        } catch (error) {
+          console.error('서버 오류:', error);
+          Swal.fire({
+            html: '서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
+          });
+        }
+      });
+    });
+
+    async function validateForm() {
+      
+      var email = document.getElementById('id').value;
+      var password = document.getElementById('password01').value;
+      var confirmPassword = document.getElementById('password02').value;
+
+      if (email === '' || password === '' || confirmPassword === '') {
+        Swal.fire({
+          html: '이메일 주소 및 비밀번호를<br> 다시 확인해주세요.'
+        });
+        return false;
+      }
+
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
+      if (!passwordPattern.test(password)) {
+        Swal.fire({
+          html: '비밀번호는 영문, 숫자, 특수문자를 포함하여<br> 8~15자리여야 합니다.'
+        });
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        Swal.fire({
+          html: '비밀번호가 일치하지 않습니다.'
+        });
+        return false;
+      }
+
+      try {
+        const isValid = await checkEmailDuplicate(email);
+        if (!isValid) {
+          Swal.fire({
+            html: '이 이메일은 이미 사용 중입니다.'
+          });
+          return false;
+        }
+      } catch (error) {
+        console.error('서버 오류:', error);
+        Swal.fire({
+          html: '이메일 확인 중 문제가 발생했습니다.'
+        });
+        return false;
+      }
+
+      return true;
+    }
+
+    async function checkEmailDuplicate(email) {
+      const url = "http://43.201.79.49/users/email/" + encodeURIComponent(email);
+
+      const requestOptions = {
+        method: "GET", 
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+
+      try {
+        const response = await fetch(url, requestOptions);
+        const data = await response.json();
+
+        if (data.code === 200 && data.data.result === "ENABLE") {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.error('서버 오류:', error);
+        Swal.fire({
+          html: '이메일 확인 중 문제가 발생했습니다.'
+        });
+        return false;
+      }
+    }
+
+  </script>
+
+</head>
+
+<body class="pg_sign sign_up03">
+
+  <header>
+    <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
+    <h1>회원가입</h1>
+    <span></span>
+  </header>
+
+  <main>
+    <div class="middle">
+      <p>회원가입 후
+        진정한 성장을 경험하세요!</p>
+    </div>
+
+    <div class="bottom">
+
+      <div class="wrap_label">
+
+        <label class="label">
+          <input type="text" id="id" placeholder="이메일 주소 입력">
+        </label>
+
+        <label class="label">
+          <input type="password" id="password01" placeholder="비밀번호 입력">
+          <img src="./img/signup/eye_gray.svg" alt="eye_gray" class="toggle_pw01">
+        </label>
+        <p></p>
+
+        <label class="label">
+          <input type="password" id="password02" placeholder="비밀번호 재입력">
+          <img src="./img/signup/eye_gray.svg" alt="eye_gray" class="toggle_pw02">
+        </label>
+
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <button type="button" class="btn_action" id="btnSignUp">회원가입</button>
+
+
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <link rel="shortcut icon" href="/public/img/common/img_favicon.ico" type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/list_like.css">
+    <style>
+        .contents {
+            display: none;
+        }
+    </style>
+
+    <!-- js -->
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="./js/common.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.like').forEach(function (element) {
+
+                element.addEventListener('click', function () {
+
+                    console.log(this)
+
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                    } else {
+                        this.classList.add('active');
+                    };
+                })
+
+            });
+
+            var tabs = document.querySelectorAll('.wrap_tab li');
+
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(function(tab) {
+                        tab.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    toggleSections(index);
+                });
+            });
+
+        });
+
+        function toggleSections() {
+            var expertSection = document.querySelector('.expert');
+            var contentsSection = document.querySelector('.contents');
+
+            if (expertSection.style.display === 'none') {
+                expertSection.style.display = 'block';
+                contentsSection.style.display = 'none';
+            } else {
+                expertSection.style.display = 'none';
+                contentsSection.style.display = 'block';
+            }
+        }
+
+    </script>
+</head>
+
+<body class="pg_list_like"><input type="hidden" id="input_page" value="like">
+    <header>
+        <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
+        <h1>찜리스트</h1>
+        <span></span>
+    </header>
+    <main>
+
+        <ul class="wrap_tab">
+            <li class="active">전문가</li>
+            <li>콘텐츠</li>
+        </ul>
+
+        <section class="expert">
+
+            <span>전문가 : 50명</span>
+
+            <div class="wrap_item">
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="contents">
+
+            <span>콘텐츠 : 50개</span>
+
+            <div class="wrap_item">
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+
+                <div class="item">
+                    <img src="" alt="item">
+                    <p>성공을 위한 컨설팅</p>
+                    <p>#비지니스 #성공 #컨설팅</p>
+                    <span class="like"></span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+    <nav class="fnb"></nav>
+</body>
+
+</html>

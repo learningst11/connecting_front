@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
+  let category;
 
   await fetchAndRenderExperts();
 
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.querySelector(".popup").style.display = "none";
 
       var filterValue = select.value;
-      await fetchAndRenderExperts(filterValue);
+      await fetchAndRenderExperts(filterValue, category);
     });
   });
 
@@ -43,9 +44,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   document.querySelectorAll(".wrap_button button").forEach(function (button) {
     button.addEventListener("click", async function () {
-      const category = this.getAttribute("data-category");
-      const expertsContainer = document.querySelector(".wrap_item");
-      expertsContainer.innerHTML = "";
+      category = this.innerText;
+      if (category == "전체") {
+        category = "";
+      }
+      const postsContainer = document.querySelector(".wrap_item");
+      postsContainer.innerHTML = "";
 
       const experts = await fetchExperts(0, 10, "latest", category);
       renderExperts(experts);
@@ -56,11 +60,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       this.classList.add("active");
     });
   });
-  
 });
 
-async function fetchAndRenderExperts(filter1 = "latest") {
-  const experts = await fetchExperts(0, 10, filter1);
+async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
+  const experts = await fetchExperts(filter1, filter2);
   renderExperts(experts);
 }
 
@@ -68,11 +71,10 @@ async function fetchExperts(
   page = 0,
   size = 10,
   filter1 = "latest",
-  filter2 = "",
-  option = "all"
+  filter2 = ""
 ) {
   try {
-    const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}&option=${option}`;
+    const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}`;
     console.log("Request URL:", url);
 
     const response = await fetch(url, {

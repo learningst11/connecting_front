@@ -18,6 +18,7 @@
     <script src="./js/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/expert_review.js"></script>
 
     <script>
 
@@ -88,21 +89,19 @@
                 </div>
 
                 <select name="" id="sort_origin" style="display:none;">
-                    <option value="latest">별점 높은 순</option>
-                    <option value="review">별점 낮은 순</option>
-                    <option value="review">최신 순</option>
+                    <option value="score">평점 순</option>
+                    <option value="latest">최신 순</option>
                 </select>
                 <div class="wrap_sort_output">
-                    <span class="sort_output">별점 높은 순</span>
+                    <span class="sort_output">최신 순</span>
                 </div>
             
                 <div class="wrap_popup">
                     <div class="popup">
                         <p>정렬</p>
                         <ul>
-                            <li>별점 높은 순</li>
-                            <li>별점 낮은 순</li>
-                            <li>최신순</li>
+                            <li>평점 순</li>
+                            <li>최신 순</li>
                         </ul>
                     </div>
                 </div>

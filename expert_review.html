@@ -20,54 +20,12 @@
     <script src="./js/common.js"></script>
     <script src="./js/expert_review.js"></script>
 
-    <script>
-
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            document.querySelector('.sort_output').addEventListener('click', function() {
-                document.querySelector('.wrap_popup').style.display = 'block';
-                document.querySelector('.popup').style.display = 'block';
-            });
-
-            document.querySelectorAll('.popup ul li').forEach(function(item) {
-                item.addEventListener('click', function() {
-                    var selectedText = this.innerText;
-                    var select = document.getElementById('sort_origin');
-
-                    for (var i = 0; i < select.options.length; i++) {
-                        if (select.options[i].text === selectedText) {
-                            select.selectedIndex = i;
-                            break;
-                        }
-                    }
-
-                    document.querySelector('.sort_output').textContent = selectedText;
-
-                    document.querySelector('.wrap_popup').style.display = 'none';
-                    document.querySelector('.popup').style.display = 'none';
-                });
-            });
-
-            document.addEventListener('click', function(event) {
-                var isClickInsidePopup = document.querySelector('.popup').contains(event.target);
-                var isClickInsideSortOutput = document.querySelector('.sort_output') === event.target;
-
-                if (!isClickInsidePopup && !isClickInsideSortOutput) {
-                    document.querySelector('.wrap_popup').style.display = 'none';
-                    document.querySelector('.popup').style.display = 'none';
-                }
-            });
-
-        });
-
-    </script>
 </head>
 
 <body class="pg_expert_review">
     <header>
         <a href="javascript:window.history.back();"><img src="./img/common/back.svg" alt="back"></a>
-        <h1><img src="./img/common/logo.png" alt="logo"></h1>
+        <h1 onclick="location.href='./home.html'"><img src="./img/common/logo.png" alt="logo"></h1>
         <img src="./img/common/user_gray.svg" alt="user_gray">
     </header>
     <main>

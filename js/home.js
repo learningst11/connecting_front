@@ -1,3 +1,18 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+    fetchAndRenderExperts();
+    fetchAndRenderContents();
+
+    document.querySelectorAll('.wrap_a a').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            sessionStorage.setItem('selectedCategory', this.textContent.trim());
+            window.location.href = './category.html';
+        });
+    });
+
+});
+
 // expert
 async function fetchAndRenderExperts(page, size, filter1, filter2, option) {
     const experts = await fetchExperts(page, size, filter1, filter2, option);

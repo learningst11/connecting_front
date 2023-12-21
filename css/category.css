@@ -33,7 +33,7 @@ section.contents .wrap_item .item .wrap_p p:nth-of-type(3) { color: var(--connec
 
 /* expert */
 section.expert .wrap_item { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 16px; } 
-section.expert .wrap_item .item { padding: 16px 0; border-bottom: 1px solid var(--gray-gray-05, #E9E9E9); } 
+section.expert .wrap_item .item { width: 100%; padding: 16px 0; border-bottom: 1px solid var(--gray-gray-05, #E9E9E9); } 
 section.expert .wrap_item .item .top { display: flex; gap: 0 15px; } 
 section.expert .wrap_item .item .top > img { background: var(--gray-gray-04, #CDCDCD); min-width: 100px; max-height: 80px; aspect-ratio: 100/80; border-radius: 6px; } 
 section.expert .wrap_item .item .top > div { flex: 1; display: flex; flex-direction: column; gap:4px 0; } 

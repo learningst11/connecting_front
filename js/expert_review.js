@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function(){
           document.querySelector(".popup").style.display = "none";
     
           var filterValue = select.value;
-          await fetchAndRenderExpertsReviews(filterValue);
+          await fetchAndRenderExpertsReviews(expertId, filterValue);
         });
       });
 
@@ -78,24 +78,19 @@ async function fetchExpertsDetailsScore(expertId) {
 function renderExpertsReviews(reviews, expertsDetailScore) {
     console.log(reviews);
 
-    // Select the wrap05 elements
     const wrap05 = document.querySelector('.wrap.wrap05');
     const wrap05None = document.querySelector('.wrap.wrap05.none');
 
     if (reviews.length > 0) {
-        // Hide the 'no reviews' section and show the reviews section
         wrap05None.style.display = 'none';
         wrap05.style.display = 'block';
 
-        // Update expert's average score and total reviews
         const avgScoreP = wrap05.querySelector('.flexbox_h2 p');
         avgScoreP.innerHTML = `${expertsDetailScore.avgScore.toFixed(1)} <span>(${expertsDetailScore.total})</span>`;
 
-        // Clear existing reviews
         const wrapItem = wrap05.querySelector('.wrap_item');
         wrapItem.innerHTML = '';
 
-        // Populate reviews
         reviews.forEach(review => {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'item';
@@ -131,7 +126,6 @@ function renderExpertsReviews(reviews, expertsDetailScore) {
             wrapItem.appendChild(itemDiv);
         });
     } else {
-        // Show the 'no reviews' section and hide the reviews section
         wrap05None.style.display = 'block';
         wrap05.style.display = 'none';
     }

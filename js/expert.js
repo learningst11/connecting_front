@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           break;
         }
       }
+      
 
       document.querySelector(".sort_output").textContent = selectedText;
       document.querySelector(".wrap_popup").style.display = "none";
@@ -63,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
-  const experts = await fetchExperts(filter1, filter2);
+  const experts = await fetchExperts(0, 10, filter1, filter2);
   renderExperts(experts);
 }
 

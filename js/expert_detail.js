@@ -88,8 +88,9 @@ async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
     introductionTitleElement.textContent = expertsDetail.name;
 
     const introductionItems = document.querySelectorAll(
-      ".introduction .wrap_item .item span:nth-of-type(1)"
+      ".introduction .wrap01 .wrap_item .item span:nth-of-type(1)"
     );
+
     introductionItems[0].textContent = expertsDetail.field;
     introductionItems[2].textContent = expertsDetail.subject;
     introductionItems[3].textContent = expertsDetail.characteristic;
@@ -149,17 +150,28 @@ async function fetchExpertsReviews(
 function renderExpertsReviews(reviews, expertsDetailScore, expertId) {
   console.log(reviews);
 
-  const ratingSpans = document.querySelectorAll(".wrap05 .wrap_rating span");
-  ratingSpans[0].textContent = expertsDetailScore.avgScore;
-  ratingSpans[1].textContent = `(${expertsDetailScore.total})`;
-
+  const wrapRating = document.querySelector(".wrap05 .wrap_rating");
+  const moreLink = document.querySelector(".wrap05 .flexbox_h3 a");
   const wrapItem = document.querySelector(".wrap05 .wrap_item");
+
+  if (reviews.length === 0) {
+    wrapRating.style.display = 'none';
+    moreLink.style.display = 'none';
+  } else {
+    wrapRating.style.display = '';
+    moreLink.style.display = '';
+
+    const ratingSpans = document.querySelectorAll(".wrap05 .wrap_rating span");
+    ratingSpans[0].textContent = expertsDetailScore.avgScore;
+    ratingSpans[1].textContent = `(${expertsDetailScore.total})`;
+  }
+
   wrapItem.innerHTML = "";
+
 
   reviews.forEach((review) => {
     const reviewDiv = document.createElement("div");
     reviewDiv.className = "item";
-    reviewDiv.id = `review-${expertId}`;
 
     const flexboxDiv = document.createElement("div");
     flexboxDiv.className = "flexbox";
@@ -195,7 +207,7 @@ function renderExpertsReviews(reviews, expertsDetailScore, expertId) {
 ~
     wrapItem.appendChild(reviewDiv);
 
-    reviewDiv.addEventListener("click", function () {
+    document.querySelector(".wrap05 .flexbox_h3 a").addEventListener("click", function () {
         window.location.href = `expert_review.html?id=${expertId}`;
       });
   });

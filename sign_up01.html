@@ -16,8 +16,10 @@
   <script src="./js/common.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <script>
-    $(function () {
 
+    document.addEventListener('DOMContentLoaded', function () {
+
+      sessionStorage.setItem('action', 'signup');
 
     });
   </script>
@@ -55,7 +57,7 @@
           <hr>
        </div>
 
-        <button type="button" onclick="location.href='./sign_up02.html'"><img src="./img/signup/sign_in_email.svg" alt="sign_in_email"><span>이메일로 시작하기</span></button>
+        <button type="button" onclick="location.href='./verify_mobile.html'"><img src="./img/signup/sign_in_email.svg" alt="sign_in_email"><span>이메일로 시작하기</span></button>
 
         <div class="question">
           <p>커넥터즈 계정이 있으신가요?</p>

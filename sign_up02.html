@@ -20,7 +20,14 @@
 
   <script>
 
-      document.addEventListener('DOMContentLoaded', function () {
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+        var action = sessionStorage.getItem('action');
+
+        if(action == 'signup"'){
+        location.href="./sign_up01.html"
+       }
 
         var chkAll = document.getElementById('chkAll');
 
@@ -54,15 +61,15 @@
         }
 
         document.getElementById('btnNext').addEventListener('click', function() {
-        if (areRequiredCheckboxesChecked()) {
-          window.location.href = 'sign_up03.html'; 
-        } else {
-          Swal.fire({
-            text: '모든 필수 항목을 체크해주세요.',
-            confirmButtonText: 'Ok'
-          });
-        }
-      });
+          if (areRequiredCheckboxesChecked()) {
+              sessionStorage.setItem('terms', true);
+              window.location.href = 'sign_up03.html'; 
+          } else {
+              Swal.fire({
+                  text: '모든 필수 항목을 체크해주세요.',
+              });
+          }
+      });;
 
     });
   </script>

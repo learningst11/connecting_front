@@ -128,8 +128,6 @@
 
             <div class="wrap_time">
                 <div class="time_selected">첫 번째 시간 제안하기</div>
-                <div class="time_selected">두 번째 시간 제안하기</div>
-                <div class="time_selected">세 번째 시간 제안하기</div>
             </div>
 
             <div id="myModal" class="modal">
@@ -138,8 +136,6 @@
                     <div id="datepicker"></div>
                     <div class="wrap_time_select">
                         <div class="time_select">오후 7:00 ~ 오후 8:00</div>
-                        <div class="time_select">오후 9:00 ~ 오후 10:00</div>
-                        <div class="time_select">오후 10:00 ~ 오후 11:00</div>
                     </div>
                 </div>
             </div>
@@ -166,12 +162,13 @@
                         , minDate: "-5Y"
                         , maxDate: "+5y",
                         onSelect: function (dateText, inst) {
-                            $("#date").val(dateText);
-                            $("#date-top-right").text(dateText);
+                        fetchExpertsDetailsScore(dateText);
                         },
                         prevText: "이전",
                         nextText: "다음",
                     });
+
+
 
 
                     var activeTimeSelected;
@@ -182,6 +179,46 @@
                         activeTimeSelected = $(this);
                         $("#myModal").show();
                     });
+
+
+                        // 사용 가능한 시간 슬롯 가져오는 함수
+                        async function fetchExpertsDetailsScore(selectedDate) {
+                            try {
+                                const url = `http://43.201.79.49/mds/635a359d731b7f22f9c438fe/date/${selectedDate}`;
+                                console.log(url);
+                                const response = await fetch(url, { method: "GET" });
+
+                                if (!response.ok) {
+                                    throw new Error(`Network response was not ok (${response.status})`);
+                                }
+
+                                const result = await response.json();
+                                displayTimeSlots(result.data); // 시간 슬롯 표시 함수 호출
+                                console.log(result.data);
+                            } catch (error) {
+                                console.error("데이터 가져오기 오류:", error);
+                            }
+                        }
+
+                        function displayTimeSlots(data) {
+                            $('.wrap_time_select').empty(); // 기존 시간 슬롯 제거
+                            data.forEach(item => {
+                                let utcDate = new Date(item.date_time);
+                                let kstDate = new Date(utcDate.getTime() + (9 * 60 * 60000)); // UTC 시간에 9시간을 더함 (KST 시간)
+
+                                // 오후/오전 결정 및 12시간제로 변환
+                                let hours = kstDate.getHours();
+                                let ampm = hours >= 12 ? '오후' : '오전';
+                                hours = hours % 12;
+                                hours = hours || 12; // 0시는 12시로 표시
+                                let minutes = kstDate.getMinutes().toString().padStart(2, '0');
+
+                                let koreaTimeStr = `${ampm} ${hours}:${minutes}`;
+
+                                $('.wrap_time_select').append(`<div class="time_select">${koreaTimeStr}</div>`);
+                            });
+                        }
+
 
                     $(document).on("click", ".time_select", function() {
                         var selectedTime = $(this).text().split('~')[0].trim();
@@ -195,6 +232,10 @@
                         }
 
                         $("#myModal").hide();
+
+
+
+
                     });
 
                     function convertTo24Hour(time) {

@@ -73,6 +73,7 @@ async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
     experts.forEach((expert) => {
       const expertDiv = document.createElement("div");
       expertDiv.className = "item";
+      expertDiv.setAttribute('data-id', expert.id);
   
       expertDiv.innerHTML = `
         <div class="top">
@@ -90,6 +91,10 @@ async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
       `;
   
       expertsContainer.appendChild(expertDiv);
+
+      expertDiv.addEventListener("click", function () {
+        window.location.href = `expert_detail.html?id=${expert.id}`;
+      });
     });
   }
   

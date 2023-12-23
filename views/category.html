@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <link rel="shortcut icon" href="/public/img/common/img_favicon.ico" type="image/x-icon">
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <link rel="stylesheet" href="/public/css/common.css">
+    <link rel="stylesheet" href="/public/css/category.css">
+
+    <!-- js -->
+    <script src="/public/jquery/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="/common.js"></script>
+    <script src="/public/js/category.js"></script>
+</head>
+
+<body class="pg_category"><input type="hidden" id="input_page" value="contents">
+    <header>
+        <a href="javascript:window.history.back();"><img src="/public/img/common/back.svg" alt="back"></a>
+        <h1 onclick="location.href='./home.html'"><img src="/public/img/common/logo.png" alt="logo"></h1>
+        <img src="/public/img/common/user_gray.svg" alt="user_gray">
+    </header>
+    <main>
+
+        <section class="top">                
+
+            <h2>전략/기획</h2>
+
+        </section>
+
+        <ul class="wrap_tab">
+            <li class="active">전문가</li>
+            <li>콘텐츠</li>
+            <li>로드맵(준비중)</li>
+        </ul>
+
+        <section class="expert">
+
+            <select name="" id="sort_origin" style="display:none;">
+                <option value="latest">최신 순</option>
+                <option value="score">평점 순</option>
+                <option value="review">후기 많은 순</option>
+            </select>
+            <div class="wrap_sort_output">
+                <span class="sort_output">최신 순</span>
+            </div>
+            
+            <div class="wrap_popup">
+                <div class="popup">
+                    <p>정렬</p>
+                    <ul>
+                        <li>최신 순</li>
+                        <li>평점 순</li>
+                        <li>후기 많은 순</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="wrap_item">
+
+                <!-- <div class="item">
+                    <div class="top">
+                        <img src="" alt="item">
+                        <div>
+                            <p>홍길동 <img src="/public/img/common/rating.svg" alt="rating"><span>5.0</span></p>
+                            <p>네이버 서비스 기획</p>
+                            <p>서비스 기획</p>
+                        </div>
+                        <span class="like"></span>
+                    </div>
+                    <div class="bottom">
+                        <p>서비스 기획의 A to Z를 책임집니다. 서비스 기획의 A to Z를 책임집니다. 서비스 기획의 A to Z를 책임집니다.</p>
+                    </div>
+                </div> -->
+
+            </div>
+
+        </section>
+
+        <section class="contents">
+
+            <div class="wrap_item">
+
+                <!-- <div class="item">
+
+                    <div class="wrap_img">
+                        <img src="/public/img/expert_detail/contents_item.png" alt="contents_item">
+                        <img src="/public/img/expert_detail/platform-etc.png" alt="platform-etc">
+                    </div>
+
+                    <div class="wrap_p">
+                        <p>홍길동 | 2023. 08. 18</p>
+                        <p>제안서 전략 세우는 법</p>
+                        <p>#전략/기획</p>
+                    </div>
+
+                </div> -->
+
+            </div>
+  
+        </section>
+
+        <section class="road">
+            <div class="wrap_empty">
+                <img src="/public/img/common/review_empty.svg" alt="empty">
+                <p>준비중이에요 곧 만나요!</p>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>

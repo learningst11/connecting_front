@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEST</title>
+
+  <link rel="stylesheet" href="/public/css/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="/public/css/common.css">
+  <link rel="stylesheet" href="/public/css/sign.css">
+
+  <script src="/public/jquery/jquery-3.6.1.min.js"></script>
+  <script src="/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      sessionStorage.setItem('action', 'signup');
+
+    });
+  </script>
+
+</head>
+
+<body class="pg_sign sign_up01">
+
+  <main>
+    <div class="top">
+        <a href="javascript:window.history.back();"><img src="/public/img/common/back.svg" alt="back"></a>
+    </div>
+
+    <div class="middle">
+      <p>회원가입 후
+        진정한 성장을 경험하세요!</p>
+    </div>
+
+    <div class="bottom">
+        <p class="bubble">
+          ⚡️ 3초만에 빠른 회원가입
+        </p>
+
+      <div class="wrap_btn">
+
+
+        <button type="button"><img src="/public/img/signup/sign_in_google.svg" alt="sign_in_google">
+          <span>구글로 시작하기</span></button>
+        
+        <button type="button"><img src="/public/img/signup/sign_in_kakao.png" alt="sign_in_kakao"><span>카카오톡으로 시작하기</span></button>
+
+        <div class="wrap_text">
+          <hr>
+          <span>또는</span>
+          <hr>
+       </div>
+
+        <button type="button" onclick="location.href='./verify_mobile.html'"><img src="/public/img/signup/sign_in_email.svg" alt="sign_in_email"><span>이메일로 시작하기</span></button>
+
+        <div class="question">
+          <p>커넥터즈 계정이 있으신가요?</p>
+          <a href='./sign_in.html'>로그인</a>
+        </div>
+  
+
+      </div>
+
+
+    </div>
+
+  </main>
+
+
+</body>
+
+</html>

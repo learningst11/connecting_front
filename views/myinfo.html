@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <link rel="stylesheet" href="/public/css/common.css">
+    <link rel="stylesheet" href="/public/css/myinfo.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+
+    <script src="/public/jquery/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="/common.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            
+            document.querySelector('.btn_change01').addEventListener('click', function(){
+                
+                var nickname = document.getElementById('nickname');
+                nickname.removeAttribute('readonly');
+                nickname.focus();
+
+            });
+            
+            document.querySelector('.btn_change02').addEventListener('click', function(){
+
+                location.href = "./myinfo_change_mobile.html"
+                
+            });
+
+            // phone
+            document.getElementById('phone').addEventListener('keyup', function() {
+                var numericValue = this.value.replace(/[^0-9]/g, '');
+                var formattedValue = numericValue.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3");
+                formattedValue = formattedValue.replace("--", "-");
+                this.value = formattedValue;
+            });
+            
+        });
+
+
+    </script>
+
+</head>
+
+<body class="pg_myinfo">
+
+    <header>
+        <a href="javascript:window.history.back();"><img src="/public/img/common/back.svg" alt="back"></a>
+        <h1>내 정보</h1>
+        <span></span>
+    </header>
+    <main>
+
+        <div class="middle">
+            <p><span>귀요미</span>님</p>
+        </div>
+
+        <div class="bottom">
+
+            <div class="wrap_label">
+
+                <label title="닉네임">
+                    <input type="text" placeholder="닉네입 입력" id="nickname" readonly>
+                    <button type="button" class="btn_change01">변경</button>
+                </label>
+
+                <label title="휴대폰 번호">
+                    <input type="text" placeholder="-없이 숫자만 입력" id="phone" readonly>
+                    <button type="button" class="btn_change02" onclick="sessionStorage.setItem('action', 'changemobile')">변경</button>
+                </label>
+
+                <label title="이메일">
+                    <input type="text" placeholder="abc@naver.com" readonly>
+                </label>
+
+            </div>
+            
+            
+        </div>
+        
+    </main>
+    
+
+</body>
+
+</html>

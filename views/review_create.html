@@ -38,10 +38,10 @@
             function setRating(clickedStarIndex) {
                 stars.forEach((star, index) => {
                     if(index <= clickedStarIndex) {
-                        star.src = './img/common/star_big.svg';
+                        star.src = '/public/img/common/star_big.svg';
                         star.setAttribute('data-filled', 'true');
                     } else {
-                        star.src = './img/common/star_big_empty.svg'; 
+                        star.src = '/public/img/common/star_big_empty.svg'; 
                         star.setAttribute('data-filled', 'false');
                     }
                 });

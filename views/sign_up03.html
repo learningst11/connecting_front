@@ -34,7 +34,7 @@
         var passwordInput01 = document.getElementById('password01');
         var type = passwordInput01.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput01.setAttribute('type', type);
-        this.src = type === 'text' ? '/img/signup/eye_purple.svg' : '/img/signup/eye_gray.svg';
+        this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
       });
 
       var togglePassword02 = document.querySelector('.toggle_pw02');
@@ -42,7 +42,7 @@
         var passwordInput02 = document.getElementById('password02');
         var type = passwordInput02.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput02.setAttribute('type', type);
-        this.src = type === 'text' ? '/img/signup/eye_purple.svg' : '/img/signup/eye_gray.svg';
+        this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
       });
 
         $('#btnSignUp').on('click', async function () {

@@ -1,19 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
   const queryParams = new URLSearchParams(window.location.search);
   var expertId = queryParams.get("id");
-
+  
   if (expertId) {
-    // 전문가 소개 tab
+
     fetchAndRenderExpertsDetails(expertId);
 
-    //콘텐츠 tab
-    fetchAndRenderExpertsPosts(expertId);
+    const tabs = document.querySelectorAll('.wrap_tab li');
 
-    // 리뷰
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            this.classList.add('active');
+
+            if (this.textContent === '전문가 소개') {
+                fetchAndRenderExpertsDetails(expertId);
+                document.querySelector('.introduction').style.display = 'block';
+                document.querySelector('.contents').style.display = 'none';
+            } else if (this.textContent === '콘텐츠') {
+                fetchAndRenderExpertsPosts(expertId);
+                document.querySelector('.contents').style.display = 'block';
+                document.querySelector('.introduction').style.display = 'none';
+            }
+        });
+    });
+
     fetchAndRenderExpertsReviews(expertId);
   } else {
-    console.error("No expert ID provided in the URL");
+    location.href="./index.html";
   }
+  
 });
 
 async function fetchAndRenderExpertsDetails(expertId) {
@@ -183,8 +201,8 @@ function renderExpertsReviews(reviews, expertsDetailScore, expertId) {
       const starImg = document.createElement("img");
       starImg.src =
         i < review.score
-          ? "/public/imgcommon/star.svg"
-          : "/public/imgcommon/star_empty.svg";
+          ? "/public/img/common/star.svg"
+          : "/public/img/common/star_empty.svg";
       starImg.alt = "star";
       wrapStarDiv.appendChild(starImg);
     }

@@ -115,6 +115,7 @@
                         }).then(function (result) {
                             if (result.isConfirmed) {
 
+                                document.getElementById('phone').value = '';
                                 document.getElementById('numberInput').value = '';
         
                                 if (action === 'signup') {

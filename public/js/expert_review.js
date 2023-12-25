@@ -102,7 +102,7 @@ function renderExpertsReviews(reviews, expertsDetailScore) {
             wrapStarDiv.className = 'wrap_star';
             for (let i = 0; i < 5; i++) {
                 const starImg = document.createElement('img');
-                starImg.src = i < review.score ? './img/common/star.svg' : './img/common/star_empty.svg';
+                starImg.src = i < review.score ? '/public/img/common/star.svg' : '/public/img/common/star_empty.svg';
                 starImg.alt = 'star';
                 wrapStarDiv.appendChild(starImg);
             }

@@ -15,13 +15,41 @@
   <script src="/public/jquery/jquery-3.6.1.min.js"></script>
   <script src="/common.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
 
     document.addEventListener('DOMContentLoaded', function () {
 
       sessionStorage.setItem('action', 'signup');
-
+      
     });
+
+    function handleCredentialResponse(response) {
+    // ID 토큰 디코드
+    const responsePayload = parseJwt(response.credential);
+
+    // 디코드된 페이로드와 ID 토큰 콘솔에 출력
+    console.log("Email: " + responsePayload.email); 
+    console.log(response.credential);
+
+    // 이메일과 ID 토큰을 세션 스토리지에 저장
+    sessionStorage.setItem('email', responsePayload.email);
+    sessionStorage.setItem('social_token', response.credential);
+
+    // 사용자를 다음 페이지로 리디렉션
+    location.href = "/views/sign_up02.html";
+};
+
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+};
+
+        
   </script>
 
 </head>
@@ -44,6 +72,12 @@
         </p>
 
       <div class="wrap_btn">
+
+        <div id="g_id_onload"
+        data-client_id="266214929436-9acqh2au2h8e05ourhgeuq66v6ldt7cn.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+   </div>
+   <div class="g_id_signin" data-type="icon" data-shape="circle" ></div>
 
 
         <button type="button"><img src="/public/img/signup/sign_in_google.svg" alt="sign_in_google">

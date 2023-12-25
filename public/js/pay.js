@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
         var img = coupon.querySelector('img');
         if (img) {
             if (img.src.includes('coupon_active.svg')) {
-                img.src = './img/common/coupon_free.svg';
+                img.src = '/public/img/common/coupon_free.svg';
             } else {
-                img.src = './img/common/coupon_active.svg';
+                img.src = '/public/img/common/coupon_active.svg';
             }
         }
 

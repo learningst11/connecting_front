@@ -24,21 +24,54 @@
       
     });
 
-    function handleCredentialResponse(response) {
-    // ID 토큰 디코드
-    const responsePayload = parseJwt(response.credential);
+    async function handleCredentialResponse(response) {
+        // ID 토큰 디코드
+        const responsePayload = parseJwt(response.credential);
 
-    // 디코드된 페이로드와 ID 토큰 콘솔에 출력
-    console.log("Email: " + responsePayload.email); 
-    console.log(response.credential);
+        // 디코드된 페이로드와 ID 토큰 콘솔에 출력
+        console.log("Email: " + responsePayload.email); 
+        console.log(response.credential);
 
-    // 이메일과 ID 토큰을 세션 스토리지에 저장
-    sessionStorage.setItem('email', responsePayload.email);
-    sessionStorage.setItem('social_token', response.credential);
+        // 이메일과 ID 토큰을 세션 스토리지에 저장
+        sessionStorage.setItem('email', responsePayload.email);
+        sessionStorage.setItem('social_token', response.credential);
 
-    // 사용자를 다음 페이지로 리디렉션
-    location.href = "/views/sign_up02.html";
-};
+        // 소셜 토큰 검증 API 호출
+        try {
+            const verifyResponse = await fetch("http://your-api-url.com/users/social/verify", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token: response.credential,
+                    platform: "google"
+                })
+            });
+
+            const verifyData = await verifyResponse.json();
+
+            // 검증 결과에 따른 처리
+            if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
+                // 검증 성공: 회원가입 페이지로 이동
+                location.href = "/views/sign_up02.html";
+            } else if (verifyData.data.result === "SUCCESS") {
+                 // 이미 등록된 회원: 로그인 처리
+                sessionStorage.setItem('access_token', verifyData.data.access_token);
+                sessionStorage.setItem('refresh_token', verifyData.data.refresh_token);
+
+                // 사용자 인터페이스 업데이트 및 리디렉션
+                alert('로그인되었습니다.');
+                window.location.href = '/views/home.html'; // 로그인 후 리디렉션할 페이지
+            } else {
+                // 검증 실패: 오류 메시지 표시
+                console.error('토큰 검증 실패');
+            }
+        } catch (error) {
+            console.error('API 요청 실패:', error);
+        }
+    };
+
 
 function parseJwt(token) {
     const base64Url = token.split('.')[1];

@@ -48,7 +48,7 @@
         $('#btnSignUp').on('click', async function () {
 
           if (!await validateForm()) {
-              return;
+            return;
           }
 
           var email = $('#id').val();
@@ -58,13 +58,18 @@
               terms: true
             };
             
-            // 일반 회원가입
-            if (loginMethod === 'standard') {
-
-              var password = $('#password01').val();
-              signUpData.password = password;
-              signUpData.mobile = phoneNumber;
-
+          // 소셜 회원가입
+          if (loginMethod === 'social') {
+            var socialToken = sessionStorage.getItem('social_token');
+            var snsPlatform = sessionStorage.getItem('sns_platform');
+            signUpData.social_token = socialToken;
+            signUpData.sns_platform = snsPlatform;
+          }
+          // 일반 회원가입
+          else if (loginMethod === 'standard') {
+            var password = $('#password01').val();
+            signUpData.password = password;
+            signUpData.mobile = phoneNumber;
           }
 
           try {

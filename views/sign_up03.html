@@ -21,14 +21,20 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      var loginMethod = sessionStorage.getItem('signupMethod');
+      var loginMethod = sessionStorage.getItem('loginMethod');
       var phoneNumber = sessionStorage.getItem('phoneNumber');
       var terms = sessionStorage.getItem('terms');
+      var sessionEmail = sessionStorage.getItem('email');
 
-      if(!terms){
-        location.href="./sign_up01.html"
+      
+      if (!terms) {
+        location.href = "./sign_up01.html"
       }
 
+      if (loginMethod === 'social') {
+        document.getElementById('id').value=sessionEmail;
+        document.getElementById('id').setAttribute('readonly', true);
+      }
       var togglePassword01 = document.querySelector('.toggle_pw01');
       togglePassword01.addEventListener('click', function () {
         var passwordInput01 = document.getElementById('password01');
@@ -45,71 +51,69 @@
         this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
       });
 
-        $('#btnSignUp').on('click', async function () {
+      $('#btnSignUp').on('click', async function () {
 
-          if (!await validateForm()) {
-            return;
+        if (!await validateForm()) {
+          return;
+        }
+
+        var email = $('#id').val();
+
+        var signUpData = {
+          email: email,
+          terms: true
+        };
+
+        if (loginMethod === 'social') {
+          var socialToken = sessionStorage.getItem('social_token');
+          var snsPlatform = sessionStorage.getItem('sns_platform');
+          signUpData.social_token = socialToken;
+          signUpData.sns_platform = snsPlatform;
+          document.getElementById('id').value = sessionEmail;
+        }else if (loginMethod === 'standard') {
+          var password = $('#password01').val();
+          signUpData.password = password;
+          signUpData.mobile = phoneNumber;
+        }
+
+        try {
+          const response = await fetch("http://43.201.79.49/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signUpData)
+          });
+
+          const data = await response.json();
+
+          if (data.code === 200) {
+            // 회원가입 성공 처리
+            alert('회원가입이 완료되었습니다.');
+            window.location.href = './sign_in_email.html';
+          } else {
+            Swal.fire({
+              html: '회원가입에 실패하였습니다.'
+            }).then(function (result) {
+
+              sessionStorage.removeItem('phoneNumber');
+              sessionStorage.removeItem('loginMethod');
+              sessionStorage.removeItem('terms');
+              window.location.href = './sign_up01.html';
+
+            });
           }
-
-          var email = $('#id').val();
-          
-          var signUpData = {
-              email: email,
-              terms: true
-            };
-            
-          // 소셜 회원가입
-          if (loginMethod === 'social') {
-            var socialToken = sessionStorage.getItem('social_token');
-            var snsPlatform = sessionStorage.getItem('sns_platform');
-            signUpData.social_token = socialToken;
-            signUpData.sns_platform = snsPlatform;
-          }
-          // 일반 회원가입
-          else if (loginMethod === 'standard') {
-            var password = $('#password01').val();
-            signUpData.password = password;
-            signUpData.mobile = phoneNumber;
-          }
-
-          try {
-              const response = await fetch("http://43.201.79.49/users", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify(signUpData)
-              });
-
-              const data = await response.json();
-
-              if (data.code === 200) {
-                  // 회원가입 성공 처리
-                  alert('회원가입이 완료되었습니다.');
-                  window.location.href = './sign_in_email.html';
-                } else {
-                  Swal.fire({
-                    html: '회원가입에 실패하였습니다.'
-                  }).then(function (result) {
-
-                      sessionStorage.removeItem('phoneNumber');
-                      sessionStorage.removeItem('signupMethod');
-                      sessionStorage.removeItem('terms');
-                      window.location.href = './sign_up01.html';
-
-                    });
-              }
-          } catch (error) {
-              console.error('서버 오류:', error);
-              Swal.fire({
-                  html: '서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
-              });
-          }
+        } catch (error) {
+          console.error('서버 오류:', error);
+          Swal.fire({
+            html: '서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
+          });
+        }
       });
     });
 
     async function validateForm() {
-      
+
       var email = document.getElementById('id').value;
       var password = document.getElementById('password01').value;
       var confirmPassword = document.getElementById('password02').value;
@@ -122,15 +126,15 @@
       }
 
       function isValidEmail(email) {
-          var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-          return emailPattern.test(email);
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return emailPattern.test(email);
       }
 
       if (!isValidEmail(email)) {
-          Swal.fire({
-              html: '유효하지 않은 이메일 주소입니다.'
-          });
-          return false;
+        Swal.fire({
+          html: '유효하지 않은 이메일 주소입니다.'
+        });
+        return false;
       }
 
       const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
@@ -171,7 +175,7 @@
       const url = "http://43.201.79.49/users/email/" + encodeURIComponent(email);
 
       const requestOptions = {
-        method: "GET", 
+        method: "GET",
         headers: {
           "Content-Type": "application/json"
         }
@@ -194,8 +198,6 @@
         return false;
       }
     }
-
-
 
 
   </script>

@@ -28,9 +28,7 @@
                 this.src = type === 'text' ? './img/signup/eye_purple.svg' : './img/signup/eye_gray.svg';
             });
 
-
         });
-
 
         function validateForm() {
             var email = document.getElementById('id').value;
@@ -84,9 +82,9 @@
                     </label>
 
                     <div class="wrap_a">
-                        <a href="./find_id.html" onclick="sessionStorage.setItem('action','findid')">아이디 찾기</a>
+                        <a href="/views/find_id.html" onclick="sessionStorage.setItem('action','findid')">아이디 찾기</a>
                         <span>|</span>
-                        <a href="./find_pw.html" onclick="sessionStorage.setItem('action','findpw')">비밀번호 찾기</a>
+                        <a href="/views/find_pw.html" onclick="sessionStorage.setItem('action','findpw')">비밀번호 찾기</a>
                     </div>
 
                 </div>
@@ -110,7 +108,7 @@
                 <img src="/public/img/signup/bottom_add_google.png" alt="bottom_add_google">
             </div>
 
-            <p>커넥터즈가 처음이신가요?<a href="./sign_up01.html">회원가입</a></p>
+            <p>커넥터즈가 처음이신가요?<a href="/views/sign_up01.html">회원가입</a></p>
 
         </div>
 

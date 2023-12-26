@@ -12,23 +12,26 @@ document.addEventListener('DOMContentLoaded', function () {
   tabs.forEach(tab => {
     tab.addEventListener('click', function() {
       tabs.forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-
+      
       if (this.textContent === '콘텐츠') {
+        this.classList.add('active');
         contentsSection.style.display = 'block';
         expertSection.style.display = 'none';
-
+        
         const page = 0; 
         const size = 4; 
         const filter = selectedCategory; 
-
+        
         fetchAndRenderContents(page, size, filter);
       } else if (this.textContent === '전문가') {
+        this.classList.add('active');
         expertSection.style.display = 'block';
         contentsSection.style.display = 'none';
 
         document.querySelector('.top h2').textContent = selectedCategory;
         fetchAndRenderExperts('latest', selectedCategory);
+      } else{
+        return;
       }
     });
   });

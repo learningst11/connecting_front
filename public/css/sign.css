@@ -23,7 +23,7 @@ main .bottom{
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .bubble:after { content: ""; position: absolute; bottom: 0; left: 20%; width: 0; height: 0; border: 20px solid transparent; border-top-color: #fff; border-bottom: 0; border-left: 0; margin-left: -10px; margin-bottom: -20px; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn { display: flex; flex-direction: column; gap: 10px 0; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button { display: flex; justify-content: center; align-items: center; padding: 20px; border-radius: 8px; color: #191919; font-size: 16px; font-weight: 600; line-height: 20px; } 
-.pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button span { margin-right: auto; } 
+.pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button span { font-weight: bold;  } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button:nth-of-type(1) { background: #fff; border: 1px solid var(--gray-gray-04, #cdcdcd); } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button:nth-of-type(2) { background: #fee500; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button:nth-of-type(3) { background: var(--primary); } 
@@ -33,7 +33,7 @@ main .bottom{
  .wrap_btn
  button:nth-of-type(3)
  span { color: #fff; } 
-.pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button img { margin-right: auto; } 
+.pg_sign:is(.sign_in, .sign_up01) main .bottom .wrap_btn button img { margin-right: 100px; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .question { display: flex; justify-content: center; align-items: center; gap: 0 5px; margin-top: 30px; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .question { color: #a0a0a0; font-size: 14px; font-style: normal; font-weight: 400; line-height: 22px; } 
 .pg_sign:is(.sign_in, .sign_up01) main .bottom .question a { color: #6e4ddc; font-size: 14px; font-weight: 500; line-height: 22px; text-decoration-line: underline; } 
@@ -165,3 +165,24 @@ main .bottom{
 .pg_sign.find_result main .bottom > div { border-radius: 8px; background: var(--basic-bg-color, #f5f6f9); height: 50px; line-height: 50px; text-align: center; color: #333; font-size: 14px; font-weight: 500; } 
 .pg_sign.find_result main .bottom > button { border-radius: 8px; border: 1px solid var(--connectors-main-color, #6E4DDC); background: var(--basic-white, #FFF); width: 100%; height: 50px; color: var(--purple-600, #583EB0); text-align: center; font-size: 18px; font-weight: 600; margin-top: 25px; } 
 .pg_sign.find_result main .bottom > button.btn_action { background: var(--connectors-main-color, #6E4DDC); color: var(--basic-white, #FFF); text-align: center; font-size: 18px; margin-top: 15px; } 
+
+
+/* btn_login */
+.g_id_signin{
+    background-image: url(/public/img/signup/bg_btn_google.png) !important; background-repeat: no-repeat !important; background-position: center !important;  background-size: contain !important;  padding: 10px !important; height: 50px !important;
+}
+.g_id_signin iframe {
+    opacity: 0;
+}
+
+.btn_kakao{
+    background-image: url(/public/img/signup/bg_btn_kakao.png) !important;  background-repeat: no-repeat !important;  background-position: center !important; background-size: contain !important;padding: 10px !important;
+    height: 50px;
+}
+
+.btn_email{
+    background-image: url(/public/img/signup/bg_btn_email.png) !important; background-repeat: no-repeat !important; background-size: contain !important; background-position: center !important; padding: 10px !important;
+    height: 50px;
+}
+
+

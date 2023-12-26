@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchAndRenderExpertsReviews(expertId);
   } else {
-    location.href="./index.html";
+    location.href="/views/index.html";
   }
   
 });

@@ -1,8 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
 
-    // fetchUserInfo();
-    
-    fetchRecommendationUser();
+    fetchUserInfo();
 
     // document.querySelector('.btn_change01').addEventListener('click', function(){
                 
@@ -28,34 +26,33 @@ window.addEventListener('DOMContentLoaded', function(){
 
 });
 
-// async function fetchUserInfo() {
-//     const userId = 'test123@test123.com'
+async function fetchUserInfo() {
+    const userId = sessionStorage.getItem('user_id');
+    if (!userId) {
+        console.error('User ID not found');
+        return;
+    }
 
-//     if (!userId) {
-//         console.error('User ID not found');
-//         return;
-//     }
+    const accessToken = sessionStorage.getItem('access_token');
+    try {
+        const response = await fetch(`http://43.201.79.49/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
 
-//     const accessToken = sessionStorage.getItem('access_token');
-//     try {
-//         const response = await fetch(`http://43.201.79.49/users/${userId}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${accessToken}`
-//             }
-//         });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
+        const data = await response.json();
+        console.log('User Info:', data);
 
-//         const data = await response.json();
-//         console.log('User Info:', data);
-
-//     } catch (error) {
-//         console.error('Error fetching user info:', error);
-//     }
-// }
+    } catch (error) {
+        console.error('Error fetching user info:', error);
+    }
+}
 
 async function fetchRecommendationUser(){
     const accessToken = sessionStorage.getItem('access_token');

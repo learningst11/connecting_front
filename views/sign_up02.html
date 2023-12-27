@@ -63,7 +63,7 @@
         document.getElementById('btnNext').addEventListener('click', function() {
           if (areRequiredCheckboxesChecked()) {
               sessionStorage.setItem('terms', true);
-              window.location.href = 'sign_up03.html'; 
+              window.location.href = '/views/sign_up03.html'; 
           } else {
               Swal.fire({
                   text: '모든 필수 항목을 체크해주세요.',

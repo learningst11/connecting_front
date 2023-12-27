@@ -28,7 +28,7 @@
 
       
       if (!terms) {
-        location.href = "./sign_up01.html"
+        location.href = "/views/sign_up01.html"
       }
 
       if (loginMethod === 'social') {
@@ -90,7 +90,7 @@
           if (data.code === 200) {
             // 회원가입 성공 처리
             alert('회원가입이 완료되었습니다.');
-            window.location.href = './sign_in_email.html';
+            window.location.href = '/views/sign_in_email.html';
           } else {
             Swal.fire({
               html: '회원가입에 실패하였습니다.'
@@ -99,7 +99,7 @@
               sessionStorage.removeItem('phoneNumber');
               sessionStorage.removeItem('loginMethod');
               sessionStorage.removeItem('terms');
-              window.location.href = './sign_up01.html';
+              window.location.href = '/views/sign_up01.html';
 
             });
           }

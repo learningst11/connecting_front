@@ -1,5 +1,12 @@
+
 window.addEventListener('load', function () {
+
+  sessionStorage.setItem('user_id', 'test123@test123.com');
+  sessionStorage.setItem('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTIzQHRlc3QxMjMuY29tIiwiaWQiOiI2NThiOTFjNWI0OTNkNDU4ZTYwMTVmYzQiLCJleHAiOjE3MDM2NzA0NTF9.xIwWqL3d2JUrpK6Pzp18LxmkxzB5iL3mhPK67A6zGCQyEE9j2QwcvokWUE25_hJ9EMPh65ppEKGyjfgRmZxwEQ' );
+  sessionStorage.setItem('refresh_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTIzQHRlc3QxMjMuY29tIiwiaWQiOiI2NThiOTFjNWI0OTNkNDU4ZTYwMTVmYzQiLCJleHAiOjE3MDQ1NjgwMjh9.fjPohjokJKMneZqzKQSsaheRmLZZByt9IxbYbEW0MGHBhOrEYyJdP98YQNDf_siclVxZDph7nGltV3x8yOYLhg');
+
   document.body.classList.add('loaded');
+
 });
 
 let vh = 0;
@@ -26,8 +33,6 @@ window.addEventListener("DOMContentLoaded", function (event) {
   }
 
 });
-
-
 
 // token
 async function sendApiRequest(url, options) {
@@ -80,11 +85,11 @@ async function refreshAccessToken() {
   }
 }
 
-// example
-sendApiRequest('/api/some-endpoint', { method: 'GET' })
-  .then(data => {
+// // example
+// sendApiRequest('/api/some-endpoint', { method: 'GET' })
+//   .then(data => {
 
-  })
-  .catch(error => {
+//   })
+//   .catch(error => {
 
-  });
+//   });

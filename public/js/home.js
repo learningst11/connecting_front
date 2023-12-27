@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (event) {
             event.preventDefault();
             sessionStorage.setItem('selectedCategory', this.textContent.trim());
-            window.location.href = './category.html';
+            window.location.href = '/views/category.html';
         });
     });
 
@@ -110,7 +110,7 @@ async function renderExpertsHome(experts) {
         expertsContainer.appendChild(expertDiv);
 
         expertDiv.addEventListener("click", function () {
-            window.location.href = `expert_detail.html?id=${expert.id}`;
+            window.location.href = `/views/expert_detail.html?id=${expert.id}`;
         });
     });
 

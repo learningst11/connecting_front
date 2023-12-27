@@ -159,7 +159,7 @@ async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
       expertsContainer.appendChild(expertDiv);
 
       expertDiv.addEventListener("click", function () {
-        window.location.href = `expert_detail.html?id=${expert.id}`;
+        window.location.href = `/views/expert_detail.html?id=${expert.id}`;
       });
     });
   }

@@ -1,14 +1,44 @@
 
+const queryParams = new URLSearchParams(window.location.search);
+var expertId = queryParams.get("id");
+
 document.addEventListener('DOMContentLoaded', function () {
 
+    document.getElementById('amount').textContent = '8,000 원';
+    document.getElementById('quantity').value = 2;
+
+
     document.getElementById('plus-btn').addEventListener('click', function () {
-        document.getElementById('quantity').stepUp();
+        var quantityInput = document.getElementById('quantity');
+        if (quantityInput.value < 8) {
+            quantityInput.stepUp();
+            updateAmount();
+        }
     });
-
+    
     document.getElementById('minus-btn').addEventListener('click', function () {
-        document.getElementById('quantity').stepDown();
+        var quantityInput = document.getElementById('quantity');
+        if (quantityInput.value > 2) {
+            quantityInput.stepDown();
+            updateAmount();
+        }
     });
+    
+    document.getElementById('option1').addEventListener('change', function () {
+        if (this.checked) {
+            updateAmount();
+        }
+    });
+    
+    document.getElementById('option2').addEventListener('change', function () {
+        if (this.checked) {
+            document.getElementById('amount').textContent = '17,000원';
+        }
+    });
+    
+    
 
+    // 쿠폰
     document.querySelector('#couponUse').addEventListener('change', function () {
 
         var coupon = document.querySelector('.coupon');
@@ -40,28 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    // 예약 제품 유형
-    async function fetchExpertsReservationType() {
-        try {
-            const url = `http://43.201.79.49/mds/reservation/type`;
-            console.log(url);
-            const response = await fetch(url, { method: "GET" });
-
-            if (!response.ok) {
-                throw new Error(`Network response was not ok (${response.status})`);
-            }
-
-            const result = await response.json();
-            console.log(result.data);
-        } catch (error) {
-            console.error("데이터 가져오기 오류:", error);
-        }
-        
-    }
-
-    fetchExpertsReservationType();
-
-
         // 상담 시간
         $('#datepicker').datepicker({
 
@@ -89,8 +97,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-
-
         var activeTimeSelected;
 
         $(".time_selected").click(function () {
@@ -100,51 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#myModal").show();
         });
 
-
-        async function fetchExpertsDetailsScore(selectedDate) {
-            try {
-                const url = `http://43.201.79.49/mds/635a359d731b7f22f9c438fe/date/${selectedDate}`;
-                console.log(url);
-                const response = await fetch(url, { method: "GET" });
-
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok (${response.status})`);
-                }
-
-                const result = await response.json();
-                displayTimeSlots(result.data); 
-                console.log(result.data);
-            } catch (error) {
-                console.error("데이터 가져오기 오류:", error);
-            }
-        }
-
-        function displayTimeSlots(data) {
-            $('.wrap_time_select').empty();
-            data.forEach(item => {
-                let utcDate = new Date(item.date_time);
-                let kstDate = new Date(utcDate.getTime() - (9 * 60 * 60000)); 
-        
-                let startHours = kstDate.getHours();
-                let startAmPm = startHours >= 12 ? '오후' : '오전';
-                startHours = startHours % 12;
-                startHours = startHours || 12;
-                let startMinutes = kstDate.getMinutes().toString().padStart(2, '0');
-        
-                kstDate.setMinutes(kstDate.getMinutes() + 30);
-                let endHours = kstDate.getHours();
-                let endAmPm = endHours >= 12 ? '오후' : '오전';
-                endHours = endHours % 12;
-                endHours = endHours || 12;
-                let endMinutes = kstDate.getMinutes().toString().padStart(2, '0');
-        
-                let timeRangeStr = `${startAmPm} ${startHours}:${startMinutes} ~ ${endAmPm} ${endHours}:${endMinutes}`;
-        
-                $('.wrap_time_select').append(`<div class="time_select">${timeRangeStr}</div>`);
-            });
-        }
-        
-            // time_select 클릭 이벤트
             $(document).on("click", ".time_select", function () {
                 var selectedTime = $(this).text();
                 if (activeTimeSelected) {
@@ -153,13 +114,64 @@ document.addEventListener('DOMContentLoaded', function () {
                 $("#myModal").hide();
             });
 
-            // 모달 외부 클릭 시 모달 숨김
             $(window).on("click", function (event) {
                 if ($(event.target).is("#myModal")) {
                     $("#myModal").hide();
                 }
             });
     });
+
+
+    function updateAmount() {
+        var quantity = parseInt(document.getElementById('quantity').value);
+        var amount = 8000 + (quantity - 2) * 4000;
+        document.getElementById('amount').textContent = amount.toLocaleString() + '원';
+    }
+    
+    async function fetchExpertsDetailsScore(selectedDate) {
+
+        try {
+            const url = `http://43.201.79.49/mds/${expertId}/date/${selectedDate}`;
+            console.log(url);
+            const response = await fetch(url, { method: "GET" });
+
+            if (!response.ok) {
+                throw new Error(`Network response was not ok (${response.status})`);
+            }
+
+            const result = await response.json();
+            displayTimeSlots(result.data); 
+            console.log(result.data);
+        } catch (error) {
+            console.error("데이터 가져오기 오류:", error);
+        }
+    }
+
+    function displayTimeSlots(data) {
+        $('.wrap_time_select').empty();
+        data.forEach(item => {
+            let utcDate = new Date(item.date_time);
+            let kstDate = new Date(utcDate.getTime() - (9 * 60 * 60000)); 
+    
+            let startHours = kstDate.getHours();
+            let startAmPm = startHours >= 12 ? '오후' : '오전';
+            startHours = startHours % 12;
+            startHours = startHours || 12;
+            let startMinutes = kstDate.getMinutes().toString().padStart(2, '0');
+    
+            kstDate.setMinutes(kstDate.getMinutes() + 30);
+            let endHours = kstDate.getHours();
+            let endAmPm = endHours >= 12 ? '오후' : '오전';
+            endHours = endHours % 12;
+            endHours = endHours || 12;
+            let endMinutes = kstDate.getMinutes().toString().padStart(2, '0');
+    
+            let timeRangeStr = `${startAmPm} ${startHours}:${startMinutes} ~ ${endAmPm} ${endHours}:${endMinutes}`;
+    
+            $('.wrap_time_select').append(`<div class="time_select">${timeRangeStr}</div>`);
+        });
+    }
+    
 
 
 

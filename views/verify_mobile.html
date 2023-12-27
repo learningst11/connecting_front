@@ -119,15 +119,15 @@
                                 document.getElementById('numberInput').value = '';
         
                                 if (action === 'signup') {
-                                    window.location.href = 'sign_up02.html';
+                                    window.location.href = '/views/sign_up02.html';
                                     sessionStorage.setItem('phoneNumber',phoneNumber);
                                     sessionStorage.setItem('signupMethod', 'standard');
                                 } else if (action === 'findid') {
-                                    window.location.href = 'find_id_result.html';
+                                    window.location.href = '/views/find_id_result.html';
                                 } else if (action === 'findpw') {
-                                    window.location.href = 'find_pw_new.html';
+                                    window.location.href = '/views/find_pw_new.html';
                                 }else if(action === 'changemobile'){
-                                    window.location.href = 'myinfo_change_mobile.html';
+                                    window.location.href = '/views/myinfo_change_mobile.html';
                                 }
                     
                             };

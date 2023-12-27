@@ -8,14 +8,12 @@
     <title>TEST</title>
 
     <link rel="stylesheet" href="/public/css/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/sign.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
 
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="/common.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -25,7 +23,7 @@
                 var passwordInput01 = document.getElementById('password01');
                 var type = passwordInput01.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput01.setAttribute('type', type);
-                this.src = type === 'text' ? './img/signup/eye_purple.svg' : './img/signup/eye_gray.svg';
+                this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
             });
 
         });
@@ -42,6 +40,42 @@
             }
             return true;
         }
+
+        async function loginUser() {
+
+            const email = document.getElementById('id').value;
+            const password = document.getElementById('password01').value;
+
+            try {
+                const response = await fetch('http://43.201.79.49/users/authorize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (data.code === 200) {
+                    sessionStorage.setItem('accessToken', data.data.access_token);
+                    sessionStorage.setItem('refreshToken', data.data.refresh_token);
+
+                        locatin.href='/views/home.html';
+
+                    } else {
+                        console.error('Login failed:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                }
+
+          }
 
     </script>
 
@@ -76,11 +110,7 @@
                 </label>
 
                 <div class="flexbox">
-
-                    <label class="auto_login">
-                        <input type="checkbox">자동 로그인
-                    </label>
-
+                    
                     <div class="wrap_a">
                         <a href="/views/find_id.html" onclick="sessionStorage.setItem('action','findid')">아이디 찾기</a>
                         <span>|</span>
@@ -89,7 +119,7 @@
 
                 </div>
 
-                <button type="button" class="btn_action" id="btnSignIn">로그인</button>
+                <button type="button" class="btn_action" onclick="loginUser();">로그인</button>
 
             </div>
 

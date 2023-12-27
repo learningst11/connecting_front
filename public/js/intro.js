@@ -26,7 +26,7 @@ $(function () {
                 } 
 
                 if ($(this).text() === '시작하기' && currentSlide === slider.slick('getSlick').slideCount - 1) {
-                    window.location.href = './home.html'; 
+                    window.location.href = '/views/home.html'; 
                 }
             });
 

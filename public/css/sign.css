@@ -169,20 +169,32 @@ main .bottom{
 
 /* btn_login */
 .g_id_signin{
-    background-image: url(/public/img/signup/bg_btn_google.png) !important; background-repeat: no-repeat !important; background-position: center !important;  background-size: contain !important;  padding: 10px !important; height: 50px !important;
+    background-image: url(/public/img/signup/bg_btn_google_login.png) !important; background-repeat: no-repeat !important; background-position: center !important;  background-size: contain !important;  padding: 10px !important; height: 50px !important;
 }
+.g_id_signin.signup{
+    background-image: url(/public/img/signup/bg_btn_google_signup.png) !important;
+}
+
 .g_id_signin iframe {
     opacity: 0;
 }
 
 .btn_kakao{
-    background-image: url(/public/img/signup/bg_btn_kakao.png) !important;  background-repeat: no-repeat !important;  background-position: center !important; background-size: contain !important;padding: 10px !important;
+    background-image: url(/public/img/signup/bg_btn_kakao_login.png) !important;  background-repeat: no-repeat !important;  background-position: center !important; background-size: contain !important;padding: 10px !important;
     height: 50px;
 }
 
+.btn_kakao.signup{
+    background-image: url(/public/img/signup/bg_btn_kakao_signup.png) !important;
+}
+
 .btn_email{
-    background-image: url(/public/img/signup/bg_btn_email.png) !important; background-repeat: no-repeat !important; background-size: contain !important; background-position: center !important; padding: 10px !important;
+    background-image: url(/public/img/signup/bg_btn_email_login.png) !important; background-repeat: no-repeat !important; background-size: contain !important; background-position: center !important; padding: 10px !important;
     height: 50px;
+}
+
+.btn_email.signup{
+    background-image: url(/public/img/signup/bg_btn_email_signup.png) !important; 
 }
 
 

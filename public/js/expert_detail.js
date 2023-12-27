@@ -1,6 +1,7 @@
+const queryParams = new URLSearchParams(window.location.search);
+var expertId = queryParams.get("id");
+
 document.addEventListener("DOMContentLoaded", function () {
-  const queryParams = new URLSearchParams(window.location.search);
-  var expertId = queryParams.get("id");
   
   if (expertId) {
 
@@ -226,7 +227,7 @@ function renderExpertsReviews(reviews, expertsDetailScore, expertId) {
     wrapItem.appendChild(reviewDiv);
 
     document.querySelector(".wrap05 .flexbox_h3 a").addEventListener("click", function () {
-        window.location.href = `expert_review.html?id=${expertId}`;
+        window.location.href = `/views/expert_review.html?id=${expertId}`;
       });
   });
 }
@@ -285,4 +286,11 @@ async function renderExpertsPosts(posts) {
       window.location.href = post.url;
     });
   });
+}
+
+
+function goToReseravtion(){
+
+    window.location.href = `/views/pay.html?id=${expertId}`;
+  
 }

@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
 
-    // fetchUserInfo();
+    fetchUserInfo();
     
     fetchRecommendationUser();
 
@@ -57,26 +57,26 @@ window.addEventListener('DOMContentLoaded', function(){
 //     }
 // }
 
-async function fetchRecommendationUser(){
-    const accessToken = sessionStorage.getItem('access_token');
-    try {
-        const response = await fetch(`http://43.201.79.49/recommendation/md`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        });
+// async function fetchRecommendationUser(){
+//     const accessToken = sessionStorage.getItem('access_token');
+//     try {
+//         const response = await fetch(`http://43.201.79.49/recommendation/md`, {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': `Bearer ${accessToken}`
+//             }
+//         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
 
-        const data = await response.json();
-        console.log('User Info:', data);
+//         const data = await response.json();
+//         console.log('User Info:', data);
 
-    } catch (error) {
-        console.error('Error fetching user info:', error);
-    }
+//     } catch (error) {
+//         console.error('Error fetching user info:', error);
+//     }
 
 
-}
+// }

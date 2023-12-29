@@ -35,10 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('amount').textContent = '17,000원';
         }
     });
-    
-    
-
-    // 쿠폰
+        
     document.querySelector('#couponUse').addEventListener('change', function () {
 
         var coupon = document.querySelector('.coupon');
@@ -69,8 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-
-        // 상담 시간
         $('#datepicker').datepicker({
 
             dateFormat: 'yy-mm-dd'

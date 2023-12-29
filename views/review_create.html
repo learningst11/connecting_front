@@ -20,11 +20,10 @@
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="./slick/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-    <script src="/common.js"></script>
+    <script src="/index.js"></script>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
-
 
             $('.wrap_imgbox').slick({
                 centerMode: false,
@@ -32,9 +31,7 @@
                 infinite:false,
             });
 
-
             var stars = document.querySelectorAll('.star');
-
             function setRating(clickedStarIndex) {
                 stars.forEach((star, index) => {
                     if(index <= clickedStarIndex) {

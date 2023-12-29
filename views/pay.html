@@ -7,15 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEST</title>
 
+    <!-- css -->
     <link rel="stylesheet" href="/public/css/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/pay.css">
 
+    <!-- js -->
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="/public/jquery/jquery-ui-1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-    <script src="/common.js"></script>
+    <script src="/index.js"></script>
     <script src="/public/js/pay.js"></script>
     <script>
 
@@ -94,144 +96,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <script>
-                $(function () {
-
-                    $('#datepicker').datepicker({
-
-                        dateFormat: 'yy-mm-dd'
-                        , showOtherMonths: true
-                        , showMonthAfterYear: true
-                        , changeYear: true
-                        , changeMonth: true
-                        , showOn: "both"
-                        , buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif"
-                        , buttonImageOnly: true
-                        , buttonText: "선택"
-                        , yearSuffix: "년"
-                        , monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-                        , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-                        , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토']
-                        , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
-                        , minDate: "-5Y"
-                        , maxDate: "+5y",
-                        onSelect: function (dateText, inst) {
-                        fetchExpertsTimes(dateText);
-                        },
-                        prevText: "이전",
-                        nextText: "다음",
-                    });
-
-
-
-
-                    var activeTimeSelected;
-
-                    $(".time_selected").click(function() {
-                        $(".time_selected").removeClass("active");
-                        $(this).addClass("active");
-                        activeTimeSelected = $(this);
-                        $("#myModal").show();
-                    });
-
-
-                        async function fetchExpertsTimes(selectedDate) {
-                            try {
-                                const url = `http://43.201.79.49/mds/635a359d731b7f22f9c438fe/date/${selectedDate}`;
-                                console.log(url);
-                                const response = await fetch(url, { method: "GET" });
-
-                                if (!response.ok) {
-                                    throw new Error(`Network response was not ok (${response.status})`);
-                                }
-
-                                const result = await response.json();
-                                displayTimeSlots(result.data); 
-                                console.log(result.data);
-                            } catch (error) {
-                                console.error("데이터 가져오기 오류:", error);
-                            }
-                        }
-
-                        function displayTimeSlots(data) {
-                            $('.wrap_time_select').empty();
-                            data.forEach(item => {
-                                console.log("원본 UTC 시간 (서버에서 받음):", item.date_time);
-
-                                let utcDate = new Date(item.date_time);
-                                console.log("Date 객체로 변환된 UTC 시간:", utcDate);
-
-                                let kstDate = new Date(utcDate.getTime() - (9 * 60 * 60000)); // UTC에서 9시간 빼기
-                                console.log("한국 시간으로 변환된 시간:", kstDate);
-
-                                let hours = kstDate.getHours();
-                                let ampm = hours >= 12 ? '오후' : '오전';
-                                hours = hours % 12;
-                                hours = hours || 12; // 0시는 12시로 표시
-                                let minutes = kstDate.getMinutes().toString().padStart(2, '0');
-
-                                let koreaTimeStr = `${ampm} ${hours}:${minutes}`;
-                                console.log("최종적으로 표시될 문자열:", koreaTimeStr);
-
-                                $('.wrap_time_select').append(`<div class="time_select">${koreaTimeStr}</div>`);
-                            });
-                        }
-
-
-                    $(document).on("click", ".time_select", function() {
-                        var selectedTime = $(this).text().split('~')[0].trim();
-                        var time24 = convertTo24Hour(selectedTime);
-
-                        var selectedDate = $("#datepicker").datepicker('getDate');
-                        var formattedDateTime = $.datepicker.formatDate('yy-mm-dd', selectedDate) + ' ' + time24;
-
-                        if (activeTimeSelected) {
-                            activeTimeSelected.text(formattedDateTime);
-                        }
-
-                        $("#myModal").hide();
-
-                    });
-
-                    function convertTo24Hour(time) {
-                    
-                        time = time.trim();
-
-                        console.log("Received time string:", time);
-
-                        var matches = time.match(/(\d+):(\d+)\s*(오전|오후)/);
-                        if (matches) {
-                            var hours = Number(matches[1]);
-                            var AMPM = matches[3];
-                            if (AMPM === "오후" && hours < 12) hours += 12;
-                            if (AMPM === "오전" && hours === 12) hours = 0;
-
-                            return hours.toString().padStart(2, '0') + ":" + matches[2] + ":00";
-                        } else {
-                            console.error("Invalid time format:", time); 
-                            return "00:00:00";
-                        }
-                    }
-
-
-                    $(document).on("click", ".time_select", function () {
-                        $('.time_select').removeClass('active');
-                        $(this).addClass('active');
-                    });
-
-                    $(document).on("click", ".time_selected", function () {
-                        $("#myModal").show();
-                    });
-
-                    $(window).on("click", function (event) {
-                        if ($(event.target).is("#myModal")) {
-                            $("#myModal").hide();
-                        }
-                    });
-                });
-
-            </script> -->
 
         </div>
 

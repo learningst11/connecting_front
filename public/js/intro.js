@@ -1,4 +1,5 @@
 $(function () {
+    
     setTimeout(function () {
         $("#intro").fadeOut('slow');
         

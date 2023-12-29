@@ -1,5 +1,4 @@
     // kakao
-    window.Kakao.init('6aea60a72234bef0d5cbb423b8f41266'); 
 
     async function kakaoLogin() {
     window.Kakao.Auth.login({
@@ -25,14 +24,15 @@
                 console.log(verifyData);
 
                 if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
-
-                    sessionStorage.setItem('email', verifyData.data.email);
-                    location.href = "/views/sign_up02.html";
+                  
+                  sessionStorage.setItem('email', verifyData.data.email);
+                  sessionStorage.setItem('action', 'signup');
+                  sessionStorage.setItem('snsPlatform', 'kakao');
+                  location.href = "/views/sign_up02.html";
                 } else if (verifyData.data.result === "SUCCESS") {
-
-                    sessionStorage.setItem('access_token', verifyData.data.access_token);
-                    sessionStorage.setItem('refresh_token', verifyData.data.refresh_token);
-                    alert('로그인되었습니다.');
+                  
+                    sessionStorage.setItem('access_token', authObj.access_token);
+                    sessionStorage.setItem('refresh_token',authObj.refresh_token);
                     window.location.href = '/views/home.html'; 
                 } else {
                     console.error('토큰 검증 실패');
@@ -46,6 +46,7 @@
 
     // google
     async function handleCredentialResponse(response) {
+
       const responsePayload = parseJwt(response.credential);
       console.log(responsePayload);
 
@@ -56,7 +57,6 @@
       sessionStorage.setItem('email', responsePayload.email);
       sessionStorage.setItem('social_token', response.credential);
 
-      // 소셜 토큰 검증 API 호출
       try {
         const verifyResponse = await fetch("http://43.201.79.49/users/social/verify?platform=google", {
           method: "POST",
@@ -79,9 +79,10 @@
 
             sessionStorage.setItem('access_token', verifyData.data.access_token);
             sessionStorage.setItem('refresh_token', verifyData.data.refresh_token);
+            sessionStorage.setItem('user_id', verifyData.data.user_id);
 
             alert('로그인되었습니다.');
-            window.location.href = '/views/home.html'; 
+            // window.location.href = '/views/home.html'; 
         } else {
             console.error('토큰 검증 실패');
         }

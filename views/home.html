@@ -17,7 +17,7 @@
     <!-- js -->
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="/common.js"></script>
+    <script src="/index.js"></script>
     <script src="/public/js/home.js"></script>
 
 </head>
@@ -26,7 +26,7 @@
     <header>
         <a href="javascript:window.history.back();"><img src="/public/img/common/back.svg" alt="back"></a>
         <h1><img src="/public/img/common/logo.png" alt="logo"></h1>
-        <img src="/public/img/common/user_gray.svg" alt="user_gray" onclick="location.href='/views/sign_in.html'">
+        <img src="/public/img/common/user_gray.svg" alt="user_gray" onclick="redirectToMyPageIfLoggedIn();">
     </header>
     <main>
 

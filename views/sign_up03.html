@@ -7,14 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEST</title>
 
+  <!-- css -->
   <link rel="stylesheet" href="/public/css/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
   <link rel="stylesheet" href="/public/css/common.css">
   <link rel="stylesheet" href="/public/css/sign.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
 
+  <!-- js -->
   <script src="/public/jquery/jquery-3.6.1.min.js"></script>
-  <script src="/common.js"></script>
+  <script src="/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <script>
@@ -65,10 +67,8 @@
         };
 
         if (loginMethod === 'social') {
-          var socialToken = sessionStorage.getItem('social_token');
           var snsPlatform = sessionStorage.getItem('sns_platform');
-          signUpData.social_token = socialToken;
-          signUpData.sns_platform = snsPlatform;
+          signUpData.snsPlatform = snsPlatform;
           document.getElementById('id').value = sessionEmail;
         }else if (loginMethod === 'standard') {
           var password = $('#password01').val();
@@ -76,8 +76,9 @@
           signUpData.mobile = phoneNumber;
         }
 
+        const url = loginMethod === 'social' ? `http://43.201.79.49/users?social=${snsPlatform}` : "http://43.201.79.49/users";
         try {
-          const response = await fetch("http://43.201.79.49/users", {
+          const response = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -90,7 +91,7 @@
           if (data.code === 200) {
             // 회원가입 성공 처리
             alert('회원가입이 완료되었습니다.');
-            window.location.href = '/views/sign_in_email.html';
+            window.location.href = '/views/sign_in.html';
           } else {
             Swal.fire({
               html: '회원가입에 실패하였습니다.'

@@ -1,82 +1,103 @@
-window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('DOMContentLoaded', function() {
 
-    fetchUserInfo();
-    
-    fetchRecommendationUser();
+    fetchAndRenderUserInfo();
 
-    // document.querySelector('.btn_change01').addEventListener('click', function(){
-                
-    //     var nickname = document.getElementById('nickname');
-    //     nickname.removeAttribute('readonly');
-    //     nickname.focus();
+    var changeButton = document.querySelector('.btn_change01');
+    var nicknameInput = document.getElementById('nickname');
 
-    // });
-    
-    // document.querySelector('.btn_change02').addEventListener('click', function(){
+    changeButton.addEventListener('click', async function() {
+        if (nicknameInput.hasAttribute('readonly')) {
 
-    //     location.href = "/views/myinfo_change_mobile.html"
-        
-    // });
+            nicknameInput.removeAttribute('readonly');
+            nicknameInput.focus();
+            changeButton.textContent = '확인';
 
-    // phone
-    // document.getElementById('phone').addEventListener('keyup', function() {
-    //     var numericValue = this.value.replace(/[^0-9]/g, '');
-    //     var formattedValue = numericValue.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3");
-    //     formattedValue = formattedValue.replace("--", "-");
-    //     this.value = formattedValue;
-    // });
+        } else {
 
+            var newNickname = nicknameInput.value;
+            try {
+                await updateNickname(newNickname);
+                alert('닉네임이 성공적으로 변경되었습니다.');
+                nicknameInput.setAttribute('readonly', true);
+                changeButton.textContent = '변경';
+            } catch (error) {
+                console.error('닉네임 변경 중 오류 발생:', error);
+                alert('닉네임 변경 중 오류가 발생했습니다.');
+            }
+        }
+    });
+
+    document.querySelector('.btn_change02').addEventListener('click', function() {
+        location.href = "/views/verify_mobile.html";
+    });
+
+    document.getElementById('phone').addEventListener('keyup', function() {
+        var numericValue = this.value.replace(/[^0-9]/g, '');
+        var formattedValue = numericValue.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3");
+        formattedValue = formattedValue.replace("--", "-");
+        this.value = formattedValue;
+    });
 });
 
-// async function fetchUserInfo() {
-//     const userId = 'test123@test123.com'
+async function updateNickname(newNickname) {
+    const userId = sessionStorage.getItem('user_id');
+    const accessToken = sessionStorage.getItem('access_token');
 
-//     if (!userId) {
-//         console.error('User ID not found');
-//         return;
-//     }
+    if (!userId || !accessToken) {
+        console.error('User ID or Access Token not found');
+        return;
+    }
 
-//     const accessToken = sessionStorage.getItem('access_token');
-//     try {
-//         const response = await fetch(`http://43.201.79.49/users/${userId}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${accessToken}`
-//             }
-//         });
+    const response = await fetch(`http://43.201.79.49/users/${userId}/nickname`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({ nickname: newNickname })
+    });
 
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
 
-//         const data = await response.json();
-//         console.log('User Info:', data);
-
-//     } catch (error) {
-//         console.error('Error fetching user info:', error);
-//     }
-// }
-
-// async function fetchRecommendationUser(){
-//     const accessToken = sessionStorage.getItem('access_token');
-//     try {
-//         const response = await fetch(`http://43.201.79.49/recommendation/md`, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${accessToken}`
-//             }
-//         });
-
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-
-//         const data = await response.json();
-//         console.log('User Info:', data);
-
-//     } catch (error) {
-//         console.error('Error fetching user info:', error);
-//     }
+    const data = await response.json();
+    if (data.code !== 200) {
+        throw new Error(data.message || 'Error updating nickname');
+    }
+}
 
 
-// }
+async function fetchAndRenderUserInfo() {
+    const userId = sessionStorage.getItem('user_id');
+    if (!userId) {
+        console.error('User ID not found');
+        return;
+    }
+
+    const accessToken = sessionStorage.getItem('access_token');
+    try {
+        const response = await fetch(`http://43.201.79.49/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('User Info:', data);
+
+        document.querySelector('.middle p span').textContent = data.data.nickname;
+        document.getElementById('nickname').value = data.data.nickname;
+        document.getElementById('phone').value = data.data.mobile;
+        document.querySelector('input[placeholder="abc@naver.com"]').value = data.data.email;
+
+
+    } catch (error) {
+        console.error('Error fetching user info:', error);
+    }
+}

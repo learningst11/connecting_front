@@ -14,7 +14,7 @@
 
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-    <script src="/common.js"></script>
+    <script src="/index.js"></script>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -24,6 +24,13 @@
             if(!action){
                 location.href="/views/index.html";
             }
+
+            var chkAll = document.getElementById('chkAll');
+            window.addEventListener('pageshow', function() {
+                if (chkAll.checked) {
+                    chkAll.checked = false;
+                }
+            });
 
             sessionStorage.removeItem('phoneNumber');
             sessionStorage.removeItem('signupMethod');
@@ -127,7 +134,8 @@
                                 } else if (action === 'findpw') {
                                     window.location.href = '/views/find_pw_new.html';
                                 }else if(action === 'changemobile'){
-                                    window.location.href = '/views/myinfo_change_mobile.html';
+                                    window.location.href = '/views/myinfo.html';
+                                    // 추가필요
                                 }
                     
                             };

@@ -14,18 +14,14 @@
  
   <!-- js -->
   <script src="/public/jquery/jquery-3.6.1.min.js"></script>
-  <script src="/index.js"></script>
+  <script src="/public/js/common.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   <script src="/public/js/login_social.js"></script>
   <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-
       sessionStorage.setItem('action', 'signup');
-
     });
-
   </script>
 
 </head>
@@ -49,11 +45,7 @@
 
       <div class="wrap_btn">
 
-        <div id="g_id_onload" data-client_id="266214929436-9acqh2au2h8e05ourhgeuq66v6ldt7cn.apps.googleusercontent.com"
-          data-callback="handleCredentialResponse">
-        </div>
-        <button class="g_id_signin signup" data-type="standard" data-shape="circle" data-theme="outline"
-          data-text="$ {button.text}" data-size="large"></button>
+        <button id="buttonDiv" class="signup"></button>
 
         <button type="button" onclick="kakaoLogin();" class="btn_kakao signup"></button>
 

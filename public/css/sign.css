@@ -168,14 +168,14 @@ main .bottom{
 
 
 /* btn_login */
-.g_id_signin{
+#buttonDiv{
     background-image: url(/public/img/signup/bg_btn_google_login.png) !important; background-repeat: no-repeat !important; background-position: center !important;  background-size: contain !important;  padding: 10px !important; height: 50px !important;
 }
-.g_id_signin.signup{
+#buttonDiv.signup{
     background-image: url(/public/img/signup/bg_btn_google_signup.png) !important;
 }
 
-.g_id_signin iframe {
+#buttonDiv iframe {
     opacity: 0;
 }
 

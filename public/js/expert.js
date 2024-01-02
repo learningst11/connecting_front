@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   await fetchAndRenderExperts();
 
+  // sort
   document.querySelector(".sort_output").addEventListener("click", function () {
     document.querySelector(".wrap_popup").style.display = "block";
     document.querySelector(".popup").style.display = "block";

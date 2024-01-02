@@ -82,6 +82,7 @@ async function fetchExpertsDetailsScore(expertId) {
 }
 
 async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
+  sessionStorage.setItem('expertName', expertsDetail.name);
   try {
     const imgElement = document.querySelector(".top .item img");
     imgElement.src = expertsDetail.image;

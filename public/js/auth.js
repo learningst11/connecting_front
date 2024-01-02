@@ -115,37 +115,29 @@ async function sendApiRequest(url, options) {
   async function refreshAccessToken() {
     const refreshToken = sessionStorage.getItem("refresh_token");
     try {
-      const response = await fetch("/api/token/refresh", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refresh_token: refreshToken }),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        sessionStorage.setItem("access_token", data.access_token);
-        저장;
-        return true;
-      } else {
-        sessionStorage.removeItem("access_token");
-        sessionStorage.removeItem("refresh_token");
-        return false;
-      }
-    } catch (error) {
-      console.error("Refresh token error:", error);
-      return false;
-    }
-  }
-  
-  // // example
-  // sendApiRequest('/api/some-endpoint', { method: 'GET' })
-  //   .then(data => {
-  
-  //   })
-  //   .catch(error => {
-  
-  //   });
-  
+        const response = await fetch("/authorize/users/token/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ refresh_token: refreshToken }),
+        });
 
+        if (response.ok) {
+            const data = await response.json();
+            sessionStorage.setItem("access_token", data.access_token);
+            
+            console.log("Access token refreshed.");
+
+            return true;
+        } else {
+            sessionStorage.removeItem("access_token");
+            sessionStorage.removeItem("refresh_token");
+            return false;
+        }
+    } catch (error) {
+        console.error("Refresh token error:", error);
+        return false;
+    }
+}
+  

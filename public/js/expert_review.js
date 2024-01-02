@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
     fetchAndRenderExpertsReviews(expertId);
 
+    // sort
+    document.querySelector(".sort_output").addEventListener("click", function () {
+      document.querySelector(".wrap_popup").style.display = "block";
+      document.querySelector(".popup").style.display = "block";
+    });
+
     document.querySelectorAll(".popup ul li").forEach(function (item) {
         item.addEventListener("click", async function () {
           var selectedText = this.innerText;
@@ -84,6 +90,10 @@ function renderExpertsReviews(reviews, expertsDetailScore) {
     if (reviews.length > 0) {
         wrap05None.style.display = 'none';
         wrap05.style.display = 'block';
+
+        const expertName = sessionStorage.getItem('expertName');
+        const exertNameH3 = wrap05.querySelector('.flexbox_h2 h3');
+        exertNameH3.textContent = `${expertName}` + " 전문가 후기";
 
         const avgScoreP = wrap05.querySelector('.flexbox_h2 p');
         avgScoreP.innerHTML = `${expertsDetailScore.avgScore.toFixed(1)} <span>(${expertsDetailScore.total})</span>`;

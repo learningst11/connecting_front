@@ -1,13 +1,10 @@
 // kakao
 Kakao.init("6aea60a72234bef0d5cbb423b8f41266");
+
 async function kakaoLogin() {
   window.Kakao.Auth.login({
     scope: 'account_email',
     success: async function (authObj) {
-      console.log(authObj);
-      console.log("token" + authObj.access_token);
-
-      sessionStorage.setItem('loginMethod', 'social');
       sessionStorage.setItem('social_token', authObj.access_token);
 
       try {
@@ -22,23 +19,44 @@ async function kakaoLogin() {
         });
 
         const verifyData = await verifyResponse.json();
-        console.log(verifyData);
 
-        if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
+        if (verifyData.code === 200) {
+          if (verifyData.data.result === "VERIFIED") {
+            // 이미 등록된 사용자로, 추가적인 로그인 처리가 필요합니다
+            sessionStorage.setItem('email', verifyData.data.email);
+            sessionStorage.setItem('action', 'signup');
+            sessionStorage.setItem('snsPlatform', 'kakao');
+            location.href = "/views/sign_up02.html";
+          } else if (verifyData.data.result === "SUCCESS") {
+            // 여기에서 /users/authorize API를 호출합니다
+            const authorizeResponse = await fetch("http://43.201.79.49/users/authorize", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                email: verifyData.data.email,
+                snsPlatform: 'kakao',
+              })
+            });
 
-          sessionStorage.setItem('email', verifyData.data.email);
-          sessionStorage.setItem('action', 'signup');
-          sessionStorage.setItem('snsPlatform', 'kakao');
-          location.href = "/views/sign_up02.html";
-        } else if (verifyData.data.result === "SUCCESS") {
+            const authorizeData = await authorizeResponse.json();
 
-          sessionStorage.setItem('snsPlatform', 'kakao');
-          sessionStorage.setItem('access_token', authObj.access_token);
-          sessionStorage.setItem('refresh_token', authObj.refresh_token);
-          alert('로그인되었습니다.');
-          // window.location.href = '/views/home.html'; 
+            if (authorizeData.code === 200) {
+              sessionStorage.setItem('access_token', authorizeData.data.access_token);
+              sessionStorage.setItem('refresh_token', authorizeData.data.refresh_token);
+              sessionStorage.setItem('user_id', authorizeData.data.userId);
+              // 로그인 성공 후 처리
+              alert('로그인되었습니다.');
+              window.location.href = '/views/home.html';
+            } else {
+              console.error('Authorize API Error:', authorizeData.message);
+            }
+          } else {
+            console.error('토큰 검증 실패');
+          }
         } else {
-          console.error('토큰 검증 실패');
+          console.error('Verify API Error:', verifyData.message);
         }
       } catch (error) {
         console.error('API 요청 실패:', error);
@@ -46,6 +64,7 @@ async function kakaoLogin() {
     }
   });
 }
+
 
 window.onload = function () {
   google.accounts.id.initialize({
@@ -61,10 +80,7 @@ window.onload = function () {
 
 // google
 async function handleCredentialResponse(response) {
-
   const responsePayload = parseJwt(response.credential);
-  console.log(responsePayload);
-
   console.log("Email: " + responsePayload.email);
   console.log("token" + response.credential);
 
@@ -84,23 +100,37 @@ async function handleCredentialResponse(response) {
     });
 
     const verifyData = await verifyResponse.json();
-    console.log(verifyData);
+    console.log(verifyData.data.email)
 
     if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
-
       sessionStorage.setItem('snsPlatform', 'google');
       sessionStorage.setItem('email', verifyData.data.email);
       location.href = "/views/sign_up02.html";
     } else if (verifyData.data.result === "SUCCESS") {
+      // 여기에서 /users/authorize API를 호출합니다
+      const authorizeResponse = await fetch("http://43.201.79.49/users/authorize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: verifyData.data.email,
+          snsPlatform: 'google'
+        })
+      });
 
-      sessionStorage.setItem('snsPlatform', 'google');
-      sessionStorage.setItem('access_token', verifyData.data.access_token);
+      const authorizeData = await authorizeResponse.json();
 
-      sessionStorage.setItem('refresh_token', verifyData.data.refresh_token);
-      sessionStorage.setItem('user_id', verifyData.data.user_id);
-
-      alert('로그인되었습니다.');
-      // window.location.href = '/views/home.html'; 
+      if (authorizeData.code === 200) {
+        sessionStorage.setItem('access_token', authorizeData.data.access_token);
+        sessionStorage.setItem('refresh_token', authorizeData.data.refresh_token);
+        sessionStorage.setItem('userId', authorizeData.data.userId);
+        // 로그인 성공 후 처리
+        alert('로그인되었습니다.');
+        window.location.href = '/views/home.html';
+      } else {
+        console.error('Authorize API Error:', authorizeData.message);
+      }
     } else {
       console.error('토큰 검증 실패');
     }

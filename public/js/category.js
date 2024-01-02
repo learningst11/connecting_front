@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
   expertSection.style.display = 'block';
   contentsSection.style.display = 'none';
 
-  // expert sort
+  // sort
   document.querySelector(".sort_output").addEventListener("click", function () {
     document.querySelector(".wrap_popup").style.display = "block";
     document.querySelector(".popup").style.display = "block";

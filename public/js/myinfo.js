@@ -28,7 +28,15 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelector('.btn_change02').addEventListener('click', function() {
-        location.href = "/views/verify_mobile.html";
+        var phone = document.getElementById('phone').value; 
+        
+        if (phone) {
+            sessionStorage.setItem('mobileNumber', phone); 
+            sessionStorage.setItem('action', 'changemobile'); 
+            location.href = "/views/verify_mobile.html"; 
+        } else {
+            alert('휴대폰 번호를 입력해주세요.'); 
+        }
     });
 
     document.getElementById('phone').addEventListener('keyup', function() {
@@ -67,7 +75,6 @@ async function updateNickname(newNickname) {
     }
 }
 
-
 async function fetchAndRenderUserInfo() {
     const userId = sessionStorage.getItem('user_id');
     if (!userId) {
@@ -75,27 +82,14 @@ async function fetchAndRenderUserInfo() {
         return;
     }
 
-    const accessToken = sessionStorage.getItem('access_token');
     try {
-        const response = await fetch(`http://43.201.79.49/users/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        });
+        const data = await sendApiRequest(`http://43.201.79.49/users/${userId}`, { method: 'GET' });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
         console.log('User Info:', data);
-
         document.querySelector('.middle p span').textContent = data.data.nickname;
         document.getElementById('nickname').value = data.data.nickname;
         document.getElementById('phone').value = data.data.mobile;
         document.querySelector('input[placeholder="abc@naver.com"]').value = data.data.email;
-
 
     } catch (error) {
         console.error('Error fetching user info:', error);

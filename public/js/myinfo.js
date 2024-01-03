@@ -49,31 +49,27 @@ window.addEventListener('DOMContentLoaded', function() {
 
 async function updateNickname(newNickname) {
     const userId = sessionStorage.getItem('user_id');
-    const accessToken = sessionStorage.getItem('access_token');
-
-    if (!userId || !accessToken) {
-        console.error('User ID or Access Token not found');
+    if (!userId) {
+        console.error('User ID not found');
         return;
     }
 
-    const response = await fetch(`http://43.201.79.49/users/${userId}/nickname`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({ nickname: newNickname })
-    });
+    try {
+        const data = await sendApiRequest(`http://43.201.79.49/users/${userId}/nickname`, {
+            method: 'PATCH',
+            body: JSON.stringify({ nickname: newNickname })
+        });
 
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
+        if (data.code !== 200) {
+            throw new Error(data.message || 'Error updating nickname');
+        }
 
-    const data = await response.json();
-    if (data.code !== 200) {
-        throw new Error(data.message || 'Error updating nickname');
+        console.log('Nickname updated:', data);
+    } catch (error) {
+        console.error('Error updating nickname:', error);
     }
 }
+
 
 async function fetchAndRenderUserInfo() {
     const userId = sessionStorage.getItem('user_id');

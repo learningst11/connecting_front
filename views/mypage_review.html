@@ -18,39 +18,8 @@
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script src="/public/js/common.js"></script>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var tabs = document.querySelectorAll('.wrap_tab li');
-            tabs.forEach(function (tab, index) {
-                tab.addEventListener('click', function () {
-                    tabs.forEach(function (tab) {
-                        tab.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    toggleSections(index);
-                });
-            });
-
-        });
-
-        function toggleSections() {
-
-            var expertSection = document.querySelector('.review_to_write');
-            var contentsSection = document.querySelector('.review_written');
-
-            if (expertSection.style.display === 'none') {
-                expertSection.style.display = 'block';
-                contentsSection.style.display = 'none';
-            } else {
-                expertSection.style.display = 'none';
-                contentsSection.style.display = 'block';
-            }
-
-        }
-    </script>
+    <script src="/public/js/auth.js"></script>
+    <script src="/public/js/mypage_review.js"></script>
 </head>
 
 <body class="pg_mypage_review">
@@ -70,7 +39,7 @@
 
             <div class="wrap_item">
 
-                <div class="item">
+                <!-- <div class="item">
                     <div class="top">
                         <img src="" alt="item">
                         <div>
@@ -82,49 +51,7 @@
                     <div class="bottom">
                      <button type="button" onclick="location.href='/views/review_create.html'">리뷰작성</button>
                     </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                     <button type="button" onclick="location.href='/views/review_create.html'">리뷰작성</button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                     <button type="button" onclick="location.href='/views/review_create.html'">리뷰작성</button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                     <button type="button" onclick="location.href='/views/review_create.html'">리뷰작성</button>
-                    </div>
-                </div>
+                </div> -->
 
             </div>
 
@@ -134,7 +61,7 @@
 
             <div class="wrap_item">
 
-                <div class="item">
+                <!-- <div class="item">
                     <div class="top">
                         <img src="" alt="item">
                         <div>
@@ -153,78 +80,14 @@
                         </div>
                         <p>컨설팅내용이 너무 좋았습니다. 다음에도 다시 한 번 신청해 컨설팅 받고 싶어요!</p>
                     </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="wrap_star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                        </div>
-                        <p>컨설팅내용이 너무 좋았습니다. 다음에도 다시 한 번 신청해 컨설팅 받고 싶어요!</p>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="wrap_star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                        </div>
-                        <p>컨설팅내용이 너무 좋았습니다. 다음에도 다시 한 번 신청해 컨설팅 받고 싶어요!</p>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="top">
-                        <img src="" alt="item">
-                        <div>
-                            <p>성공을 위한 컨설팅</p>
-                            <p>김장현<span>전문가</span></p>
-                            <p>상담진행일 | 2023.11.04(토) 14:00:32</p>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="wrap_star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                            <img src="/public/img/common/star.svg" alt="star">
-                        </div>
-                        <p>컨설팅내용이 너무 좋았습니다. 다음에도 다시 한 번 신청해 컨설팅 받고 싶어요!</p>
-                    </div>
-                </div>
+                </div> -->
 
             </div>
 
         </section>
 
-
-
     </main>
+
 </body>
 
 </html>

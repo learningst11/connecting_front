@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ mobile: phoneNumber, code: verificationCode })
             });
             const data = await response.json();
+            console.log(data);
 
             if (data.code === 200 && data.data === 'SUCCESS') {
-
                 Swal.fire({
                     html: ' 휴대폰 인증이<br>완료되었습니다.'
                 }).then(async function (result) {
@@ -139,19 +139,15 @@ document.addEventListener('DOMContentLoaded', function () {
                                 console.error('에러 발생:', error.message);
                                 alert(error.message);
                             }
-                        } else if (action === 'findpw') {
-                            window.location.href = '/views/find_pw_new.html';
                         } else if (action === 'changemobile') {
                             try {
                                 const response = await fetch('http://43.201.79.49/users/mobile', {
                                     method: 'PATCH',
                                     headers: {
-                                        'Content-Type': 'application/json',
                                         'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
                                     },
                                     body: JSON.stringify({ mobile: phoneNumber })
                                 });
-                                const data = await response.json();
 
                                 if (data.code === 200) {
                                     window.location.href = '/views/myinfo.html';

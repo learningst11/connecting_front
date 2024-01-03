@@ -18,57 +18,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <script src="/public/js/common.js"></script>
   <script src="/public/js/auth.js"></script>
-  <script>
-
-    //pw 
-    document.addEventListener('DOMContentLoaded', function () {
-
-      var togglePassword01 = document.querySelector('.toggle_pw01');
-      togglePassword01.addEventListener('click', function () {
-        var passwordInput01 = document.getElementById('password01');
-        var type = passwordInput01.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput01.setAttribute('type', type);
-        this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
-      });
-
-      var togglePassword02 = document.querySelector('.toggle_pw02');
-      togglePassword02.addEventListener('click', function () {
-        var passwordInput02 = document.getElementById('password02');
-        var type = passwordInput02.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput02.setAttribute('type', type);
-        this.src = type === 'text' ? '/public/img/signup/eye_purple.svg' : '/public/img/signup/eye_gray.svg';
-
-      });
-
-      function validateForm() {
-        var password = document.getElementById('password01').value;
-        var confirmPassword = document.getElementById('password02').value;
-
-        if (password === '' || confirmPassword === '') {
-          Swal.fire({
-            html: '모든 필드를 채워주세요.'
-          });
-          return false;
-        }
-        if (password !== confirmPassword) {
-          Swal.fire({
-            html: '비밀번호가 일치하지 않습니다.'
-          });
-          return false;
-        }
-
-        return true;
-      }
-
-      document.getElementById('btnConfirm').addEventListener('click', function() {
-        if (validateForm()) {
-                window.location.href = '/views/find_pw_result.html';
-        }
-      });
-
-    });
-
-  </script>
+  <script src="/public/js/find_pw_new.js"></script>
 </head>
 
 <body class="pg_sign find_pw_new">
@@ -100,7 +50,7 @@
           <input type="password" id="password02" placeholder="비밀번호 재입력">
           <img src="/public/img/signup/eye_gray.svg" alt="eye_gray" class="toggle_pw02">
         </label>
-        
+
 
       </div>
 

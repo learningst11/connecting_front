@@ -68,6 +68,12 @@
                     sessionStorage.setItem('access_token', data.data.access_token);
                     sessionStorage.setItem('refresh_token', data.data.refresh_token);
                     sessionStorage.setItem('user_id', data.data.userId);
+                    alert('로그인되었습니다.');
+
+                    if(sessionStorage.getItem('from') === 'mypage'){              
+                    location.href = '/views/mypage.html';
+                    return;
+                    }
 
                     location.href='/views/home.html';
 
@@ -75,7 +81,9 @@
                         console.error('Login failed:', data.message);
                     }
                 } catch (error) {
-                    console.error('Error during login:', error);
+                    Swal.fire({
+                        html: '이메일 주소 및 비밀번호를<br> 다시 확인해주세요.'
+                    }); 
                 }
 
           }

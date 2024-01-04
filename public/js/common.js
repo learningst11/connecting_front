@@ -26,11 +26,11 @@ window.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-function redirectToMyPageIfLoggedIn() {
-  const accessToken = sessionStorage.getItem("access_token");
-  if (accessToken) {
-    location.href = "/views/mypage.html";
-  } else {
-    location.href = "/views/sign_in.html";
-  }
-}
+// function redirectToMyPageIfLoggedIn() {
+//   const accessToken = sessionStorage.getItem("access_token");
+//   if (accessToken) {
+//     location.href = "/views/mypage.html";
+//   } else {
+//     location.href = "/views/sign_in.html";
+//   }
+// }

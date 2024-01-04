@@ -33,9 +33,9 @@
         <div class="middle">
             <p>오늘도 커넥터즈하세요!</p>
 
-            <div class="user" onclick="location.href='/views/myinfo.html'">
+            <div class="user" onclick="sessionStorage.setItem('from','mypage'); location.href='/views/sign_in.html';">
                 <img src="/public/img/common/user.svg" alt="user">
-                <span>귀요미</span>
+                <span>로그인해주세요.</span>
                 <img src="/public/img/common/arrow_right.svg" alt="arrow_right">
             </div>
 
@@ -68,10 +68,6 @@
                 </div>
                 <div class="item">
                     <span>약관</span>
-                    <img src="/public/img/common/arrow_right.gray.svg" alt="arrow_right">
-                </div>
-                <div class="item">
-                    <span>로그아웃</span>
                     <img src="/public/img/common/arrow_right.gray.svg" alt="arrow_right">
                 </div>
             </div>

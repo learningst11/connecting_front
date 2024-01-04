@@ -2,79 +2,106 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   try {
 
-    let loginPlatform = sessionStorage.getItem('login_platform');
+    let snsPlatform = sessionStorage.getItem('sns_platform');
+    let accessToken = sessionStorage.getItem('access_token');
 
-    if (loginPlatform === 'kakao') {
+    if (accessToken) {
 
-      let accessToken = sessionStorage.getItem('access_token');
+      if (snsPlatform === 'kakao') {
 
-      if (accessToken) {
+        let socialToken = sessionStorage.getItem('social_token');
+
         try {
           const response = await fetch("http://43.201.79.49/users/social/verify?platform=kakao", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ token: accessToken })
+            body: JSON.stringify({ token: socialToken })
           });
 
-          const data = await response.json();
+          const verifyData = await response.json();
 
-          if (data.code === 200) {
-            if (data.data.result === 'VERIFIED') {
-              console.log('토큰 검증 성공')
-            } else {
+          if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
               location.href = '/views/sign_in.html'
+
+            } else if (verifyData.data.result === "SUCCESS") {
+              const authorizeResponse = await fetch("http://43.201.79.49/users/authorize", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  email: verifyData.data.email,
+                  snsPlatform: 'kakao',
+                })
+              });
+
+              const authorizeData = await authorizeResponse.json();
+
+              if (authorizeData.code === 200) {
+                console.log('카카오 로그인 성공');
+              } else {
+                console.error('Authorize API Error:', authorizeData.message);
+              }
+            } else {
+              console.error('토큰 검증 실패');
             }
-          } else {
-            throw new Error("API 응답 오류");
-          }
         } catch (error) {
           console.error("API 요청 실패 또는 처리 중 오류 발생:", error);
           sessionStorage.removeItem('access_token');
         }
-      } else {
-        console.log("세션 스토리지에 토큰이 없음");
-        location.href = '/views/sign_in.html'
-      }
 
 
-    } else if (loginPlatform === 'google') {
+      } else if (snsPlatform === 'google') {
 
-      let accessToken = sessionStorage.getItem('access_token');
+        let socialToken = sessionStorage.getItem('social_token');
 
-      if (accessToken) {
-        try {
-          const response = await fetch("http://43.201.79.49/users/social/verify?platform=google", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ token: accessToken })
-          });
+          try {
+            const response = await fetch("http://43.201.79.49/users/social/verify?platform=google", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ token: socialToken })
+            });
 
-          const data = await response.json();
+            const verifyData = await response.json();
 
-          if (data.code === 200) {
-            if (data.data.result === 'VERIFIED') {
-              console.log('토큰 검증 성공')
-            } else {
-              location.href = '/views/sign_in.html'
-            }
-          } else {
-            throw new Error("API 응답 오류");
+            if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
+                location.href = '/views/sign_in.html'
+
+              } else if (verifyData.data.result === "SUCCESS") {
+                const authorizeResponse = await fetch("http://43.201.79.49/users/authorize", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    email: verifyData.data.email,
+                    snsPlatform: 'google',
+                  })
+                });
+
+                const authorizeData = await authorizeResponse.json();
+
+                if (authorizeData.code === 200) {
+                  console.log('구글 로그인 성공');
+                } else {
+                  console.error('Authorize API Error:', authorizeData.message);
+                }
+              } else {
+                console.error('토큰 검증 실패');
+              }
+          } catch (error) {
+            console.error("API 요청 실패 또는 처리 중 오류 발생:", error);
+            sessionStorage.removeItem('access_token');
           }
-        } catch (error) {
-          console.error("API 요청 실패 또는 처리 중 오류 발생:", error);
-          sessionStorage.removeItem('access_token');
-        }
+
       } else {
-        console.log("세션 스토리지에 토큰이 없음");
-        location.href = '/views/sign_in.html'
+        console.log("이메일 로그인 성공");
       }
 
-    } else {
-      console.log("이메일 로그인");
     }
 
   } catch (error) {
@@ -90,7 +117,7 @@ async function sendApiRequest(url, options) {
   const accessToken = sessionStorage.getItem("access_token");
 
   const headers = {
-    'Content-Type': 'application/json', 
+    'Content-Type': 'application/json',
     ...options.headers,
     Authorization: `Bearer ${accessToken}`,
   };

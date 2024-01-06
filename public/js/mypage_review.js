@@ -38,6 +38,8 @@ async function fetchAvailableReviews() {
         const response = await sendApiRequest(url, { method: 'GET' });
         if (response.code === 200) {
             updateAvailableReviews(response.data);
+            console.log(url);
+            console.log(response.data);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -46,11 +48,13 @@ async function fetchAvailableReviews() {
 
 async function fetchWrittenReviews() {
     const userId = sessionStorage.getItem('user_id');
-    const url = `http://43.201.79.49/users/${userId}/reviews?page=0&size=6`;
+    const url = `http://43.201.79.49/users/${userId}/reviews`;
     try {
         const response = await sendApiRequest(url, { method: 'GET' });
         if (response.code === 200) {
             updateWrittenReviews(response.data);
+            console.log(url);
+            console.log(response.data);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -64,6 +68,8 @@ function updateAvailableReviews(reviews) {
     reviews.forEach(review => {
         const reviewElement = document.createElement('div');
         reviewElement.className = 'item';
+        reviewElement.setAttribute('data-reservation-id', review.reservationId);
+        reviewElement.setAttribute('data-md-id', review.mdId);
         reviewElement.innerHTML = `
             <div class="top">
                 <img src="${review.image}" alt="item">
@@ -74,11 +80,18 @@ function updateAvailableReviews(reviews) {
                 </div>
             </div>
             <div class="bottom">
-                <button type="button" onclick="location.href='/views/review_create.html'">리뷰작성</button>
+                <button type="button">리뷰작성</button>
             </div>`;
+
+        const reviewButton = reviewElement.querySelector('.bottom button');
+        reviewButton.addEventListener('click', () => {
+            location.href = `/views/mypage_review_create.html?reservationId=${review.reservationId}&mdId=${review.mdId}&name=${encodeURIComponent(review.name)}`;
+        });
+
         container.appendChild(reviewElement);
     });
 }
+
 
 function updateWrittenReviews(reviews) {
     const container = document.querySelector('.review_written .wrap_item');
@@ -93,7 +106,7 @@ function updateWrittenReviews(reviews) {
                 <div>
                     <p>${review.name}</p>
                     <p>${review.job}<span>전문가</span></p>
-                    <p>상담진행일 | ${formatDate(review.purchaseDate)}</p>
+                    <p>구매확정일 | ${formatDate(review.purchaseDate)}</p>
                 </div>
             </div>
             <div class="bottom">
@@ -104,13 +117,11 @@ function updateWrittenReviews(reviews) {
     });
 }
 
-// 날짜 포맷 함수
 function formatDate(dateString) {
     const date = new Date(dateString);
     return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 }
 
-// 별점 생성 함수
 function generateStars(score) {
     let starsHtml = '';
     for (let i = 0; i < score; i++) {

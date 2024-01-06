@@ -3,25 +3,25 @@ document.addEventListener('DOMContentLoaded', function () {
   var selectedCategory = sessionStorage.getItem('selectedCategory');
   document.querySelector('.top h2').textContent = selectedCategory;
   console.log(selectedCategory);
-  fetchAndRenderExperts(filter1 ='latest', filter2 = selectedCategory);
-  
+  fetchAndRenderExperts(filter1 = 'latest', filter2 = selectedCategory);
+
   const tabs = document.querySelectorAll('.wrap_tab li');
   const expertSection = document.querySelector('.expert');
   const contentsSection = document.querySelector('.contents');
 
   tabs.forEach(tab => {
-    tab.addEventListener('click', function() {
+    tab.addEventListener('click', function () {
       tabs.forEach(t => t.classList.remove('active'));
-      
+
       if (this.textContent === '콘텐츠') {
         this.classList.add('active');
         contentsSection.style.display = 'block';
         expertSection.style.display = 'none';
-        
-        const page = 0; 
-        const size = 4; 
-        const filter = selectedCategory; 
-        
+
+        const page = 0;
+        const size = 4;
+        const filter = selectedCategory;
+
         fetchAndRenderContents(page, size, filter);
       } else if (this.textContent === '전문가') {
         this.classList.add('active');
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelector('.top h2').textContent = selectedCategory;
         fetchAndRenderExperts('latest', selectedCategory);
-      } else{
+      } else {
         return;
       }
     });
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
         }
       }
-      
+
       document.querySelector(".sort_output").textContent = selectedText;
       document.querySelector(".wrap_popup").style.display = "none";
       document.querySelector(".popup").style.display = "none";
@@ -94,54 +94,59 @@ function toggleSections(index) {
   roadSection.style.display = 'none';
 
   if (index === 0) {
-      expertSection.style.display = 'block';
+    expertSection.style.display = 'block';
   } else if (index === 1) {
-      contentsSection.style.display = 'block';
+    contentsSection.style.display = 'block';
   } else if (index === 2) {
-      roadSection.style.display = 'block';
+    roadSection.style.display = 'block';
   }
 }
 
 // experts
 async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
-    const experts = await fetchExperts(0, 10, filter1, filter2);
-    renderExperts(experts);
-  }
-  
-  async function fetchExperts(
-    page = 0,
-    size = 4,
-    filter1 = "latest",
-    filter2 = ""
-  ) {
-    try {
-      const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}`;
-      console.log(url);
-      const response = await fetch(url, { method: "GET" });
-  
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-  
-      const result = await response.json();
-      console.log(result);
-      return result.data;
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-      return [];
+  const experts = await fetchExperts(0, 10, filter1, filter2);
+  renderExperts(experts);
+}
+
+async function fetchExperts(page = 0, size = 4, filter1 = "latest", filter2 = "") {
+  try {
+    const accessToken = sessionStorage.getItem('access_token');
+    const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}`;
+    console.log(url);
+
+    let headers = {};
+    if (accessToken) {
+      headers['Authorization'] = accessToken;
     }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: headers
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const result = await response.json();
+    console.log(result);
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+    return [];
   }
-  
-  async function renderExperts(experts) {
-    const expertsContainer = document.querySelector(".wrap_item");
-    expertsContainer.innerHTML = "";
-  
-    experts.forEach((expert) => {
-      const expertDiv = document.createElement("div");
-      expertDiv.className = "item";
-      expertDiv.setAttribute('data-id', expert.id);
-  
-      expertDiv.innerHTML = `
+}
+
+async function renderExperts(experts) {
+  const expertsContainer = document.querySelector(".wrap_item");
+  expertsContainer.innerHTML = "";
+
+  experts.forEach((expert) => {
+    const expertDiv = document.createElement("div");
+    expertDiv.className = "item";
+    expertDiv.setAttribute('data-expert-id', expert.id);
+
+    expertDiv.innerHTML = `
         <div class="top">
           <img src="${expert.image}" alt="item">
           <div>
@@ -149,58 +154,108 @@ async function fetchAndRenderExperts(filter1 = "latest", filter2 = "") {
             <p>${expert.job}</p>
             <p>${expert.category}</p>
           </div>
-          <span class="like"></span>
+          <span class="like ${expert.wish ? "active" : ""}"></span>
         </div>
         <div class="bottom">
           <p>${expert.profile}</p>
         </div>
       `;
-  
-      expertsContainer.appendChild(expertDiv);
 
-      expertDiv.addEventListener("click", function () {
-        window.location.href = `/views/expert_detail.html?id=${expert.id}`;
-      });
+    expertsContainer.appendChild(expertDiv);
+
+    expertDiv.addEventListener("click", function () {
+      window.location.href = `/views/expert_detail.html?id=${expert.id}`;
     });
-  }
-  
-  
+  });
+
+  document.querySelectorAll(".expert .like").forEach(function (element) {
+    element.addEventListener("click", async function (event) {
+        event.stopPropagation();
+
+        const userId = sessionStorage.getItem('user_id');
+        if (!userId) {
+            alert("로그인이 필요합니다");
+            window.location.href = '/views/sign_in.html';
+            return;
+        }
+
+        const productId = this.closest('.item').getAttribute('data-expert-id');
+
+        try {
+            const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'MD',
+                    product_id: productId
+                })
+            });
+
+            if (response.code === 200) {
+                if (this.classList.contains("active")) {
+                    this.classList.remove("active");
+                } else {
+                    this.classList.add("active");
+                }
+            } else {
+                alert("오류가 발생했습니다: " + response.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("요청 처리 중 오류가 발생했습니다.");
+        }
+    });
+});
+
+}
+
+
 // contents
 async function fetchAndRenderContents(page, size, filter) {
-    const posts = await fetchPosts(page, size, filter);
-    renderContents(posts);
-  }
-  
-  async function fetchPosts(page = 0, size = 4, filter = '') {
-  try {
-      const url = `http://43.201.79.49/mds/post?page=${page}&size=${size}&filter=${filter}`
-      console.log(url);
-      const response = await fetch(url, { method: "GET" });
-  
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-  
-      const result = await response.json();
-      console.log(result);
-      return result.data;
-  } catch (error) {
-      console.error('Error fetching posts: ', error);
-  }
-  }
+  const posts = await fetchPosts(page, size, filter);
+  renderContents(posts);
+}
 
-  async function renderContents(posts) {
-    const postsContainer = document.querySelector('.contents .wrap_item');
-    postsContainer.innerHTML = ''; 
-  
-    posts.forEach(post => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'item';
-  
-      postDiv.innerHTML = `
+async function fetchPosts(page = 0, size = 4, filter = '') {
+  try {
+    const accessToken = sessionStorage.getItem('access_token');
+    const url = `http://43.201.79.49/mds/post?page=${page}&size=${size}&filter=${filter}`
+    console.log(url);
+
+    let headers = {};
+    if (accessToken) {
+        headers['Authorization'] = accessToken;
+    }
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: headers
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    console.log(result);
+    return result.data;
+  } catch (error) {
+    console.error('Error fetching posts: ', error);
+  }
+}
+
+async function renderContents(posts) {
+  const postsContainer = document.querySelector('.contents .wrap_item');
+  postsContainer.innerHTML = '';
+
+  posts.forEach(post => {
+    const postDiv = document.createElement('div');
+    postDiv.className = 'item';
+
+    postDiv.innerHTML = `
         <div class="wrap_img">
           <img src="${post.image}" alt="contents_item">
           <img src="" alt="platform-etc">
+          <span class="like ${post.wish ? "active" : ""}"></span>
         </div>
         <div class="wrap_p">
           <p>${post.author} | ${post.date}</p>
@@ -208,27 +263,54 @@ async function fetchAndRenderContents(page, size, filter) {
           <p>#${post.postType}</p>
         </div>
       `;
-  
-      postsContainer.appendChild(postDiv);
-  
-        postDiv.addEventListener('click', function () {
-          window.location.href = post.url; 
-      });
+
+    postsContainer.appendChild(postDiv);
+
+    postDiv.addEventListener('click', function () {
+      window.location.href = post.url;
     });
-  
-    document.querySelectorAll('.contents .like').forEach(function (element) {
-        element.addEventListener('click', function (event) {
-            event.stopPropagation(); 
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-            } else {
-                this.classList.add('active');
-            }
+  });
+
+  document.querySelectorAll(".contents .like").forEach(function (element) {
+    element.addEventListener("click", async function (event) {
+      event.stopPropagation();
+
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) {
+        alert("로그인이 필요합니다");
+        window.location.href = '/views/sign_in.html';
+        return;
+      }
+
+      const productId = this.closest('.item').getAttribute('data-post-id');
+
+      try {
+        const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+          method: 'POST',
+          body: JSON.stringify({
+            type: 'POST',
+            product_id: productId
+          })
         });
+
+        if (response.code === 200) {
+          if (this.classList.contains("active")) {
+            this.classList.remove("active");
+          } else {
+            this.classList.add("active");
+          }
+        } else {
+          alert("오류가 발생했습니다: " + response.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert("요청 처리 중 오류가 발생했습니다.");
+      }
     });
-  }
+  });
   
-  
-  
-  
-  
+}
+
+
+
+

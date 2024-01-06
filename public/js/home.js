@@ -65,18 +65,25 @@ function swiperInit() {
 }
 
 // expert
-async function fetchAndRenderExperts(page, size, filter1, filter2, option) {
-    const experts = await fetchExperts(page, size, filter1, filter2, option);
+async function fetchAndRenderExperts(page, size, filter1, filter2) {
+    const experts = await fetchExperts(page, size, filter1, filter2);
     renderExpertsHome(experts);
 }
 
-async function fetchExperts(page = 0, size = 4, filter1 = "latest", filter2 = "", option = "all") {
+async function fetchExperts(page = 0, size = 4, filter1 = "latest", filter2 = "") {
     try {
-        const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}&option=${option}`;
+        const accessToken = sessionStorage.getItem('access_token');
+        const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}`;
         console.log("Request URL:", url);
+
+        let headers = {};
+        if (accessToken) {
+            headers['Authorization'] = accessToken;
+        }
 
         const response = await fetch(url, {
             method: "GET",
+            headers: headers
         });
 
         if (!response.ok) {
@@ -91,7 +98,6 @@ async function fetchExperts(page = 0, size = 4, filter1 = "latest", filter2 = ""
     }
 }
 
-
 async function renderExpertsHome(experts) {
     const expertsContainer = document.querySelector(".expert .wrap_item");
     expertsContainer.innerHTML = "";
@@ -99,7 +105,7 @@ async function renderExpertsHome(experts) {
     experts.forEach((expert) => {
         const expertDiv = document.createElement("div");
         expertDiv.className = "item";
-        expertDiv.id = `expert-${expert.id}`;
+        expertDiv.setAttribute('data-expert-id', expert.id);
 
         expertDiv.innerHTML = `
             <img src="${expert.image}" alt="item">
@@ -115,15 +121,43 @@ async function renderExpertsHome(experts) {
     });
 
     document.querySelectorAll(".expert .like").forEach(function (element) {
-        element.addEventListener("click", function (event) {
+        element.addEventListener("click", async function (event) {
             event.stopPropagation();
-            if (this.classList.contains("active")) {
-                this.classList.remove("active");
-            } else {
-                this.classList.add("active");
+
+            const userId = sessionStorage.getItem('user_id');
+            if (!userId) {
+                alert("로그인이 필요합니다");
+                window.location.href = '/views/sign_in.html';
+                return;
+            }
+
+            const productId = this.closest('.item').getAttribute('data-expert-id');
+
+            try {
+                const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        type: 'MD',
+                        product_id: productId
+                    })
+                });
+
+                if (response.code === 200) {
+                    if (this.classList.contains("active")) {
+                        this.classList.remove("active");
+                    } else {
+                        this.classList.add("active");
+                    }
+                } else {
+                    alert("오류가 발생했습니다: " + response.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("요청 처리 중 오류가 발생했습니다.");
             }
         });
     });
+
 }
 
 
@@ -133,10 +167,20 @@ async function fetchAndRenderContents(page, size, filter, option) {
     renderContents(posts);
 }
 
-async function fetchPosts(page = 0, size = 4, filter = '', option = "all") {
+async function fetchPosts(page = 0, size = 4, filter = '') {
     try {
-        const response = await fetch(`http://43.201.79.49/mds/post?page=${page}&size=${size}&filter=${filter}&option=${option}`, {
-            method: 'GET',
+        const accessToken = sessionStorage.getItem('access_token');
+        const url = `http://43.201.79.49/mds/post?page=${page}&size=${size}&filter=${filter}`;
+        console.log("Request URL:", url);
+
+        let headers = {};
+        if (accessToken) {
+            headers['Authorization'] = accessToken;
+        }
+    
+        const response = await fetch(url, {
+            method: "GET",
+            headers: headers
         });
 
         if (!response.ok) {
@@ -153,33 +197,64 @@ async function fetchPosts(page = 0, size = 4, filter = '', option = "all") {
 
 
 async function renderContents(posts) {
-  const postsContainer = document.querySelector('.contents .wrap_item');
-  postsContainer.innerHTML = ''; 
+    const postsContainer = document.querySelector('.contents .wrap_item');
+    postsContainer.innerHTML = '';
 
-  posts.forEach(post => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'item';
-      postDiv.innerHTML = `
+    posts.forEach(post => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'item';
+        postDiv.setAttribute('data-post-id', post.id);
+
+        postDiv.innerHTML = `
           <img src="${post.image}" alt="item">
           <p>${post.title}</p>
           <p>#${post.postType}</p>
           <span class="like ${post.wish ? "active" : ""}"></span>
       `;
-      postsContainer.appendChild(postDiv);
-  });
+        postsContainer.appendChild(postDiv);
 
+        postDiv.addEventListener("click", function () {
+           window.location.href = post.url;
+        });
+    });
 
-  document.querySelectorAll('.like').forEach(function (element) {
-      element.addEventListener('click', function (event) {
-          event.stopPropagation();
-          if (this.classList.contains('active')) {
-              this.classList.remove('active');
-          } else {
-              this.classList.add('active');
-          }
-      });
-  });
+    document.querySelectorAll(".contents .like").forEach(function (element) {
+        element.addEventListener("click", async function (event) {
+            event.stopPropagation();
 
+            const userId = sessionStorage.getItem('user_id');
+            if (!userId) {
+                alert("로그인이 필요합니다");
+                window.location.href = '/views/sign_in.html';
+                return;
+            }
+
+            const productId = this.closest('.item').getAttribute('data-post-id');
+
+            try {
+                const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        type: 'POST',
+                        product_id: productId
+                    })
+                });
+
+                if (response.code === 200) {
+                    if (this.classList.contains("active")) {
+                        this.classList.remove("active");
+                    } else {
+                        this.classList.add("active");
+                    }
+                } else {
+                    alert("오류가 발생했습니다: " + response.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("요청 처리 중 오류가 발생했습니다.");
+            }
+        });
+    });
 }
 
 

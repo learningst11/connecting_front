@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             userText.textContent = '로그인/회원가입';
         }
     }
-
 });
-
 
 async function fetchAndRenderUserInfo() {
     const userId = sessionStorage.getItem('user_id');
@@ -62,6 +60,8 @@ function addLogoutButton() {
             const data = await response.json();
 
             if (data.code === 200) {
+                document.querySelector('.middle').style.display = 'none';
+                document.querySelector('.bottom').style.display = 'none';
                 Swal.fire({
                     text: '로그아웃되었습니다.',
                     toast: true,

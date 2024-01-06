@@ -24,13 +24,21 @@ window.addEventListener("DOMContentLoaded", async function () {
       })
       .catch((error) => console.error("Error loading fnb.html:", error));
   }
+
+
+  // mypage
+  const userGray = document.querySelector('img[alt="user_gray"]')
+  if (userGray) {
+    userGray.addEventListener('click', function () {
+      let accessToken = sessionStorage.getItem('access_token');
+      if (accessToken) {
+        location.href = '/views/mypage.html';
+      } else {
+        sessionStorage.setItem('from','mypage');
+        location.href = '/views/sign_in.html';
+      }
+    });
+  }
 });
 
-// function redirectToMyPageIfLoggedIn() {
-//   const accessToken = sessionStorage.getItem("access_token");
-//   if (accessToken) {
-//     location.href = "/views/mypage.html";
-//   } else {
-//     location.href = "/views/sign_in.html";
-//   }
-// }
+

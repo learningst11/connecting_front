@@ -25,6 +25,19 @@ section.contents .wrap_item .item { border-radius: 8px; border: 1px solid var(--
 section.contents .wrap_item .item .wrap_img { border-radius: 8px 8px 0px 0px; position: relative; } 
 section.contents .wrap_item .item .wrap_img img:nth-of-type(1) { width: 100%; } 
 section.contents .wrap_item .item .wrap_img img:nth-of-type(2) { position: absolute; bottom: -30px; right: 10px; z-index: 9; } 
+section.contents .wrap_item .item .wrap_img .like { 
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    display: block; 
+    width: 25px; 
+    height: 25px; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+    background-image: url(/public/img/common/like.svg); 
+} 
+section.contents .wrap_item .item .wrap_img .like.active { background-image: url(/public/img/common/like_active.svg); } 
 section.contents .wrap_item .item .wrap_p { padding: 21px 15px; } 
 section.contents .wrap_item .item .wrap_p p:nth-of-type(1) { color: var(--gray-gray-03, #999); font-size: 14px; font-weight: 400; } 
 section.contents .wrap_item .item .wrap_p p:nth-of-type(2) { font-size: 18px; font-weight: 600; margin-top: 4px; } 

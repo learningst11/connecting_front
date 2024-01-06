@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+  let accessToken = sessionStorage.getItem('access_token');
+
+  if (accessToken) {
+    location.href = '/views/home.html';
+  }
+  
+});
+
 // kakao
 Kakao.init("6aea60a72234bef0d5cbb423b8f41266");
 
@@ -50,7 +60,6 @@ async function kakaoLogin() {
               location.href = '/views/mypage.html';
               return;
             }
-
             location.href = '/views/home.html';
           } else {
             console.error('Authorize API Error:', authorizeData.message);
@@ -125,7 +134,7 @@ async function handleCredentialResponse(response) {
         sessionStorage.setItem('sns_platform', 'google');
         sessionStorage.setItem('access_token', authorizeData.data.access_token);
         sessionStorage.setItem('refresh_token', authorizeData.data.refresh_token);
-        sessionStorage.setItem('userId', authorizeData.data.userId);
+        sessionStorage.setItem('user_id', authorizeData.data.userId);
         alert('로그인되었습니다.');
 
         if(sessionStorage.getItem('from') === 'mypage'){              

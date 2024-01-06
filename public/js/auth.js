@@ -1,21 +1,16 @@
+// token
 window.addEventListener("DOMContentLoaded", async function () {
-
   let accessToken = sessionStorage.getItem('access_token');
   try {
-
-    if (accessToken) {
-
+    if (!accessToken && window.location.pathname !== '/views/home.html') {
+      location.href = '/views/home.html';
     }
-
   } catch (error) {
-    console.error("Error loading Kakao, Google:", error);
+    console.error(error);
   }
-
 });
 
 
-
-// token
 async function sendApiRequest(url, options) {
   const accessToken = sessionStorage.getItem("access_token");
 
@@ -73,4 +68,26 @@ async function refreshAccessToken() {
     console.error("Refresh token error:", error);
     return false;
   }
+}
+
+// require login
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.require-login').forEach(item => {
+      item.addEventListener('click', function(event) {
+          if (!requireLogin()) {
+              event.preventDefault();
+          } else {
+              window.location.href = item.getAttribute('data-href');
+          }
+      });
+  });
+});
+
+function requireLogin() {
+  const accessToken = sessionStorage.getItem("access_token");
+  if (!accessToken) {
+      alert('로그인 후 이용 가능합니다.');
+      return false;
+  }
+  return true;
 }

@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           break;
         }
       }
-      
+
       document.querySelector(".sort_output").textContent = selectedText;
       document.querySelector(".wrap_popup").style.display = "none";
       document.querySelector(".popup").style.display = "none";
@@ -75,11 +75,18 @@ async function fetchExperts(
   filter2 = ""
 ) {
   try {
+    const accessToken = sessionStorage.getItem('access_token');
     const url = `http://43.201.79.49/mds?page=${page}&size=${size}&filter1=${filter1}&filter2=${filter2}`;
     console.log("Request URL:", url);
 
+    let headers = {};
+    if (accessToken) {
+        headers['Authorization'] = accessToken;
+    }
+
     const response = await fetch(url, {
-      method: "GET",
+        method: "GET",
+        headers: headers
     });
 
     if (!response.ok) {
@@ -101,18 +108,14 @@ async function renderExperts(experts) {
   experts.forEach((expert) => {
     const expertDiv = document.createElement("div");
     expertDiv.className = "item";
-    expertDiv.id = `expert-${expert.id}`;
+    expertDiv.setAttribute('data-expert-id', expert.id);
 
     expertDiv.innerHTML = `
             <div class="top">
                 <img src="${expert.image}" alt="item">
                     <div>
                         <div>
-                            <p>${
-                              expert.name
-                            }</p><img src="/public/img/common/rating.svg" alt="rating"><span>${
-      expert.score
-    }</span>
+                            <p>${expert.name}</p><img src="/public/img/common/rating.svg" alt="rating"><span>${expert.score}</span>
                         </div>  
                             <p>${expert.job}</p>
                             <p>${expert.career}</p>
@@ -130,14 +133,41 @@ async function renderExperts(experts) {
     });
   });
 
-  document.querySelectorAll(".like").forEach(function (element) {
-    element.addEventListener("click", function (event) {
-      event.stopPropagation();
-      if (this.classList.contains("active")) {
-        this.classList.remove("active");
-      } else {
-        this.classList.add("active");
-      }
+  document.querySelectorAll(".expert .like").forEach(function (element) {
+    element.addEventListener("click", async function (event) {
+        event.stopPropagation();
+
+        const userId = sessionStorage.getItem('user_id');
+        if (!userId) {
+            alert("로그인이 필요합니다");
+            window.location.href = '/views/sign_in.html';
+            return;
+        }
+
+        const productId = this.closest('.item').getAttribute('data-expert-id');
+
+        try {
+            const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'MD',
+                    product_id: productId
+                })
+            });
+
+            if (response.code === 200) {
+                if (this.classList.contains("active")) {
+                    this.classList.remove("active");
+                } else {
+                    this.classList.add("active");
+                }
+            } else {
+                alert("오류가 발생했습니다: " + response.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("요청 처리 중 오류가 발생했습니다.");
+        }
     });
-  });
+});
 }

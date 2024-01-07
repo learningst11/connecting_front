@@ -33,7 +33,7 @@
 
 .pg_review .wrap .bottom > textarea{
     width: 100%;
-    min-height: 250px;
+    min-height: 150px;
     border-radius: 8px;
     border: 1px solid var(--gray-gray-04, #CDCDCD);
     padding: 15px;

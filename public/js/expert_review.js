@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  document.addEventListener("click", function (event) {
+    var isClickInsidePopup = document.querySelector(".popup").contains(event.target);
+    var isClickInsideSortOutput = document.querySelector(".sort_output") === event.target;
+
+    if (!isClickInsidePopup && !isClickInsideSortOutput) {
+      document.querySelector(".wrap_popup").style.display = "none";
+      document.querySelector(".popup").style.display = "none";
+    }
+  });
+
 })
 
 async function fetchAndRenderExpertsReviews(expertId, filter = "latest") {
@@ -145,3 +155,16 @@ function renderExpertsReviews(reviews, expertsDetailScore) {
     wrap05.style.display = 'none';
   }
 }
+
+
+function updateWishImage() {
+  var wishImage = document.querySelector('.wrap_like img');
+
+  if (expertsDetail.wish) {
+      wishImage.src = '/public/img/common/like_gray_fill_active.svg';
+  } else {
+      wishImage.src = '/public/img/common/like_gray_fill.svg';
+  }
+}
+
+updateWishImage();

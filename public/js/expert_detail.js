@@ -2,7 +2,7 @@ const queryParams = new URLSearchParams(window.location.search);
 var expertId = queryParams.get("id");
 
 document.addEventListener("DOMContentLoaded", function () {
-  
+
   if (expertId) {
 
     fetchAndRenderExpertsDetails(expertId);
@@ -10,29 +10,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabs = document.querySelectorAll('.wrap_tab li');
 
     tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
+      tab.addEventListener('click', function () {
 
-            tabs.forEach(tab => tab.classList.remove('active'));
+        tabs.forEach(tab => tab.classList.remove('active'));
 
-            this.classList.add('active');
+        this.classList.add('active');
 
-            if (this.textContent === '전문가 소개') {
-                fetchAndRenderExpertsDetails(expertId);
-                document.querySelector('.introduction').style.display = 'block';
-                document.querySelector('.contents').style.display = 'none';
-            } else if (this.textContent === '콘텐츠') {
-                fetchAndRenderExpertsPosts(expertId);
-                document.querySelector('.contents').style.display = 'block';
-                document.querySelector('.introduction').style.display = 'none';
-            }
-        });
+        if (this.textContent === '전문가 소개') {
+          fetchAndRenderExpertsDetails(expertId);
+          document.querySelector('.introduction').style.display = 'block';
+          document.querySelector('.contents').style.display = 'none';
+        } else if (this.textContent === '콘텐츠') {
+          fetchAndRenderExpertsPosts(expertId);
+          document.querySelector('.contents').style.display = 'block';
+          document.querySelector('.introduction').style.display = 'none';
+        }
+      });
     });
 
     fetchAndRenderExpertsReviews(expertId);
   } else {
-    location.href="/views/index.html";
+    location.href = "/views/index.html";
   }
-  
+
 });
 
 async function fetchAndRenderExpertsDetails(expertId) {
@@ -110,9 +110,31 @@ async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
     const introductionItems = document.querySelectorAll(
       ".introduction .wrap01 .wrap_item .item span:nth-of-type(1)"
     );
+    const introductionItemsImg = document.querySelector(".introduction .wrap01 .wrap_item .item:nth-of-type(1) .imgbox img");
+    switch (expertsDetail.field) {
+      case '전략/기획':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_planning.png';
+        break;
+      case '마케팅':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_marketing.png';
+        break;
+      case '프로그래밍':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_programming.png';
+        break;
+      case 'HR':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_hr.png';
+        break;
+      case '창업/N잡':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_startup.png';
+        break;
+      case '디자인':
+        introductionItemsImg.src = '/public/img/expert_detail/introduction01_design.png';
+        break;
+      default:
+        break;
+    }
 
     introductionItems[0].textContent = expertsDetail.field;
-    introductionItems[2].textContent = expertsDetail.subject;
     introductionItems[3].textContent = expertsDetail.characteristic;
 
     const careerElement = document.querySelector(".wrap02 h3");
@@ -131,6 +153,44 @@ async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
 
     const meetingScheduleElement = document.querySelector(".wrap04 p");
     meetingScheduleElement.textContent = expertsDetail.meetingSchedule;
+
+    const wishImage = document.querySelector('.wrap_like img');
+    if (expertsDetail.wish) {
+      wishImage.src = '/public/img/common/like_gray_fill_active.svg';
+    } else {
+      wishImage.src = '/public/img/common/like_gray_fill.svg';
+    }
+
+    wishImage.addEventListener('click', async function () {
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) {
+        alert("로그인이 필요합니다");
+        window.location.href = '/views/sign_in.html';
+        return;
+      }
+
+      try {
+        const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            type: 'MD',
+            product_id: expertId
+          })
+        });
+
+        if (response.ok) {
+          console.log("찜하기 성공");
+        } else {
+          console.error("찜하기 실패");
+        }
+      } catch (error) {
+        console.error("API 요청 중 오류 발생:", error);
+      }
+    });
+
   } catch (error) {
     console.error("Error rendering data:", error);
   }
@@ -224,12 +284,12 @@ function renderExpertsReviews(reviews, expertsDetailScore, expertId) {
     reviewDiv.appendChild(flexboxDiv);
     reviewDiv.appendChild(contentP);
     reviewDiv.appendChild(dateSpan);
-~
-    wrapItem.appendChild(reviewDiv);
+    ~
+      wrapItem.appendChild(reviewDiv);
 
     document.querySelector(".wrap05 .flexbox_h3 a").addEventListener("click", function () {
-        window.location.href = `/views/expert_review.html?id=${expertId}`;
-      });
+      window.location.href = `/views/expert_review.html?id=${expertId}`;
+    });
   });
 }
 
@@ -290,8 +350,8 @@ async function renderExpertsPosts(posts) {
 }
 
 
-function goToReseravtion(){
+function goToReseravtion() {
 
-    window.location.href = `/views/pay.html?id=${expertId}`;
-  
+  window.location.href = `/views/pay.html?id=${expertId}`;
+
 }

@@ -31,6 +31,8 @@ section .flexbox_h3 > a img{margin-left: 6px;}
 section.introduction .wrap { padding: 30px 15px; border-bottom: 1px solid #f5f5f5; } 
 section.introduction .wrap01 .wrap_item { display: flex; justify-content: space-between; margin-top: 24px; } 
 section.introduction .wrap01 .wrap_item .item { position: relative; display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 12px 0; } 
+section.introduction .wrap01 .wrap_item .item .imgbox{width: 70px; height:70px; border-radius: 20px; background: #F8F8F8;}
+section.introduction .wrap01 .wrap_item .item .imgbox img{width: 20px; height: 20px; position: absolute; top: 18px; left: 50%; transform: translateX(-50%);}
 section.introduction .wrap01 .wrap_item .item span:nth-of-type(1) { 
     position: absolute;
     top: 45px;

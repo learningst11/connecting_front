@@ -67,18 +67,14 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.addEventListener("click", function (event) {
-    var isClickInsidePopup = document
-      .querySelector(".popup")
-      .contains(event.target);
-    var isClickInsideSortOutput =
-      document.querySelector(".sort_output") === event.target;
+    var isClickInsidePopup = document.querySelector(".popup").contains(event.target);
+    var isClickInsideSortOutput = document.querySelector(".sort_output") === event.target;
 
     if (!isClickInsidePopup && !isClickInsideSortOutput) {
       document.querySelector(".wrap_popup").style.display = "none";
       document.querySelector(".popup").style.display = "none";
     }
   });
-
 
 });
 
@@ -170,41 +166,41 @@ async function renderExperts(experts) {
 
   document.querySelectorAll(".expert .like").forEach(function (element) {
     element.addEventListener("click", async function (event) {
-        event.stopPropagation();
+      event.stopPropagation();
 
-        const userId = sessionStorage.getItem('user_id');
-        if (!userId) {
-            alert("로그인이 필요합니다");
-            window.location.href = '/views/sign_in.html';
-            return;
+      const userId = sessionStorage.getItem('user_id');
+      if (!userId) {
+        alert("로그인이 필요합니다");
+        window.location.href = '/views/sign_in.html';
+        return;
+      }
+
+      const productId = this.closest('.item').getAttribute('data-expert-id');
+
+      try {
+        const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
+          method: 'POST',
+          body: JSON.stringify({
+            type: 'MD',
+            product_id: productId
+          })
+        });
+
+        if (response.code === 200) {
+          if (this.classList.contains("active")) {
+            this.classList.remove("active");
+          } else {
+            this.classList.add("active");
+          }
+        } else {
+          alert("오류가 발생했습니다: " + response.message);
         }
-
-        const productId = this.closest('.item').getAttribute('data-expert-id');
-
-        try {
-            const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'MD',
-                    product_id: productId
-                })
-            });
-
-            if (response.code === 200) {
-                if (this.classList.contains("active")) {
-                    this.classList.remove("active");
-                } else {
-                    this.classList.add("active");
-                }
-            } else {
-                alert("오류가 발생했습니다: " + response.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert("요청 처리 중 오류가 발생했습니다.");
-        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert("요청 처리 중 오류가 발생했습니다.");
+      }
     });
-});
+  });
 
 }
 
@@ -223,12 +219,12 @@ async function fetchPosts(page = 0, size = 4, filter = '') {
 
     let headers = {};
     if (accessToken) {
-        headers['Authorization'] = accessToken;
+      headers['Authorization'] = accessToken;
     }
 
     const response = await fetch(url, {
-        method: "GET",
-        headers: headers
+      method: "GET",
+      headers: headers
     });
 
     if (!response.ok) {
@@ -308,7 +304,7 @@ async function renderContents(posts) {
       }
     });
   });
-  
+
 }
 
 

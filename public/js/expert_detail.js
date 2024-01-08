@@ -5,17 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (expertId) {
 
-    fetchAndRenderExpertsDetails(expertId);
-
     const tabs = document.querySelectorAll('.wrap_tab li');
-
+    
     tabs.forEach(tab => {
       tab.addEventListener('click', function () {
-
+        
         tabs.forEach(tab => tab.classList.remove('active'));
-
+        
         this.classList.add('active');
-
+        
         if (this.textContent === '전문가 소개') {
           fetchAndRenderExpertsDetails(expertId);
           document.querySelector('.introduction').style.display = 'block';
@@ -27,8 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
-
+    
+    fetchAndRenderExpertsDetails(expertId);
     fetchAndRenderExpertsReviews(expertId);
+    
   } else {
     location.href = "/views/index.html";
   }
@@ -44,9 +44,17 @@ async function fetchAndRenderExpertsDetails(expertId) {
 // 전문가 소개
 async function fetchExpertsDetails(expertId) {
   try {
+    const accessToken = sessionStorage.getItem('access_token');
     const url = `http://43.201.79.49/mds/${expertId}`;
+
+    let headers = {};
+    if (accessToken) {
+      headers['Authorization'] = accessToken;
+    }
+
     const response = await fetch(url, {
       method: "GET",
+      headers: headers
     });
 
     if (!response.ok) {
@@ -172,22 +180,20 @@ async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
       try {
         const response = await sendApiRequest(`http://43.201.79.49/users/${userId}/wish`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
           body: JSON.stringify({
             type: 'MD',
             product_id: expertId
           })
         });
 
-        if (response.ok) {
-          console.log("찜하기 성공");
+        if (response.code === 200) {
+          await fetchAndRenderExpertsDetails(expertId);
         } else {
-          console.error("찜하기 실패");
+          alert("오류가 발생했습니다: " + response.message);
         }
       } catch (error) {
-        console.error("API 요청 중 오류 발생:", error);
+        console.error('Error:', error);
+        alert("요청 처리 중 오류가 발생했습니다.");
       }
     });
 

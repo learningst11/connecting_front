@@ -59,6 +59,9 @@ async function loginUser() {
             if(sessionStorage.getItem('from') === 'mypage'){              
             location.href = '/views/mypage.html';
             return;
+            }else if(sessionStorage.getItem('from') === 'list_like'){
+            location.href = '/views/list_like.html';
+            return;
             }
 
             location.href='/views/home.html';

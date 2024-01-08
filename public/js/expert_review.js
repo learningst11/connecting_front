@@ -156,15 +156,3 @@ function renderExpertsReviews(reviews, expertsDetailScore) {
   }
 }
 
-
-function updateWishImage() {
-  var wishImage = document.querySelector('.wrap_like img');
-
-  if (expertsDetail.wish) {
-      wishImage.src = '/public/img/common/like_gray_fill_active.svg';
-  } else {
-      wishImage.src = '/public/img/common/like_gray_fill.svg';
-  }
-}
-
-updateWishImage();

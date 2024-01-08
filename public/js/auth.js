@@ -1,15 +1,24 @@
-// token
+// redirect
 window.addEventListener("DOMContentLoaded", async function () {
   let accessToken = sessionStorage.getItem('access_token');
   try {
-    if (!accessToken && window.location.pathname !== '/views/home.html') {
+
+    const noRedirectPages = [
+      '/views/category.html',
+      '/views/expert.html',
+      '/views/contents.html',
+      '/views/expert_detail.html',
+      '/views/expert_review.html',
+      '/views/review_view.html'
+    ];
+
+    if (!noRedirectPages.includes(window.location.pathname) && !accessToken && window.location.pathname !== '/views/home.html') {
       location.href = '/views/home.html';
     }
   } catch (error) {
     console.error(error);
   }
 });
-
 
 async function sendApiRequest(url, options) {
   const accessToken = sessionStorage.getItem("access_token");

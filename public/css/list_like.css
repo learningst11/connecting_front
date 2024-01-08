@@ -48,7 +48,6 @@
     display: block;
     width: 100%;
     border-radius: 8px;
-    background: var(--gray-gray-04, #CDCDCD);
     aspect-ratio: 160/120;
 }
 

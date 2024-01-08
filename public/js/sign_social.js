@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (accessToken) {
     location.href = '/views/home.html';
   }
-  
+
 });
 
 // kakao
@@ -56,11 +56,16 @@ async function kakaoLogin() {
             sessionStorage.setItem('user_id', authorizeData.data.userId);
             alert('로그인되었습니다.');
 
-            if(sessionStorage.getItem('from') === 'mypage'){              
+            if (sessionStorage.getItem('from') === 'mypage') {
               location.href = '/views/mypage.html';
               return;
+            } else if (sessionStorage.getItem('from') === 'list_like') {
+              location.href = '/views/list_like.html';
+              return;
             }
+
             location.href = '/views/home.html';
+
           } else {
             console.error('Authorize API Error:', authorizeData.message);
           }
@@ -137,12 +142,16 @@ async function handleCredentialResponse(response) {
         sessionStorage.setItem('user_id', authorizeData.data.userId);
         alert('로그인되었습니다.');
 
-        if(sessionStorage.getItem('from') === 'mypage'){              
+        if (sessionStorage.getItem('from') === 'mypage') {
           location.href = '/views/mypage.html';
+          return;
+        } else if (sessionStorage.getItem('from') === 'list_like') {
+          location.href = '/views/list_like.html';
           return;
         }
 
         window.location.href = '/views/home.html';
+
       } else {
         console.error('Authorize API Error:', authorizeData.message);
       }

@@ -25,7 +25,6 @@ window.addEventListener("DOMContentLoaded", async function () {
       .catch((error) => console.error("Error loading fnb.html:", error));
   }
 
-
   // mypage
   const userGray = document.querySelector('img[alt="user_gray"]')
   if (userGray) {
@@ -41,4 +40,14 @@ window.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
+function checkFnbLogin() {
+  var isLoggedIn = sessionStorage.getItem('access_token');
+  if (!isLoggedIn) {
+    sessionStorage.setItem('from','list_like');
+      alert('로그인이 필요합니다.');
+      location.href = '/views/sign_in.html';
+      return false;
+  }
+  return true;
+}
 

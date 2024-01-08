@@ -140,7 +140,6 @@ async function renderExperts(experts) {
         const userId = sessionStorage.getItem('user_id');
         if (!userId) {
             alert("로그인이 필요합니다");
-            window.location.href = '/views/sign_in.html';
             return;
         }
 

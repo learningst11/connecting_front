@@ -89,11 +89,16 @@ async function renderPosts(posts) {
   posts.forEach((post) => {
     const postDiv = document.createElement("div");
     postDiv.className = "item";
+    postDiv.setAttribute('data-post-id', post.id);
 
     postDiv.innerHTML = `
               <div class="wrap_img">
                   <img src="${post.image}" alt="contents_item">
-                  <img src="" alt="platform">
+                  <img src="${
+                    post.postIcon === "NAVER" ? "/public/img/expert_detail/naver-blog.png" :
+                    post.postIcon === "BRUNCH" ? "/public/img/expert_detail/platform-brunch.png" :
+                    post.postIcon === "CONNECTORS" ? "/public/img/expert_detail/platform-connectors.png" :
+                    post.postIcon === "TISTORY" ? "/public/img/expert_detail/platform-tistory.png" : ''}" alt="platform">
                   <span class="like ${post.wish ? "active" : ""}"></span>
               </div>
               <div class="wrap_p">
@@ -116,7 +121,6 @@ async function renderPosts(posts) {
       const userId = sessionStorage.getItem('user_id');
       if (!userId) {
         alert("로그인이 필요합니다");
-        window.location.href = '/views/sign_in.html';
         return;
       }
 

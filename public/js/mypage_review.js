@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', async function () {
 
+    history.pushState(null, null, location.href);
+
+    window.onpopstate = function(event) {
+        if (location.href.includes('/views/mypage_review.html')) {
+
+            location.href = '/views/mypage_review.html';
+        }
+    };
+
     var tabs = document.querySelectorAll('.wrap_tab li');
     tabs.forEach(function (tab, index) {
         tab.addEventListener('click', function () {
@@ -9,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             this.classList.add('active');
             toggleSections(index);
             if (index === 0) {
-                fetchAvailableReviews(); 
+                fetchAvailableReviews();
             } else {
                 fetchWrittenReviews();
             }

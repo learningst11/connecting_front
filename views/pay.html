@@ -3,122 +3,57 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEST</title>
+    <link rel="shortcut icon" href="/public/img/common/img_favicon.ico" type="image/x-icon">
 
     <!-- css -->
     <link rel="stylesheet" href="/public/css/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/pay.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css" />
+    
     <!-- js -->
     <script src="/public/jquery/jquery-3.6.1.min.js"></script>
-    <script src="/public/jquery/jquery-ui-1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script src="/public/js/common.js"></script>
+    <script src="/public/js/auth.js"></script>
     <script src="/public/js/pay.js"></script>
-    <script>
-
-    </script>
-
 </head>
 
 <body class="pg_pay">
-
     <header>
         <a href="javascript:window.history.back();"><img src="/public/img/common/back.svg" alt="back"></a>
         <h1>결제</h1>
         <span></span>
     </header>
     <main>
-        <div class="top">
-            <p>상담 유형을 선택해주세요!</p>
-            <span>블라블라 워딩필요</span>
 
-            <div class="wrap_type">
-                <div>
-                    <input type="radio" id="option1" name="type">
-                    <label for="option1">문자 상담권<span>(기본 질문 2개 / 8,000원)</span></label>
+        <section>
 
-                    <div class="quantity-controls">
-                        <button type="button" id="minus-btn" class="btn_minus"></button>
-                        <input type="number" id="quantity" name="quantity" value="0" min="0">
-                        <button type="button" id="plus-btn" class="btn_plus"></button>
-                    </div>
-                </div>
-                <div>
-                    <input type="radio" id="option2" name="type">
-                    <label for="option2">화상 20분 상담권<span>(17,000원/회)</span></label>
-                </div>
+            <div class="wrap_p">
+                <p>결제 방식을 선택해주세요!</p>
             </div>
 
-            <div class="wrap_coupon">
-                <label>
-                    <input type="checkbox" id="couponUse">
-                    쿠폰 사용하기
-                </label>
-                <div class="coupon">
-                    <img src="/public/img/common/coupon_free.svg" alt="coupon_free">
-                    <div>
-                        <p>화상상담 1회 무료 이용권</p>
-                        <p>D - 10</p>
-                        <p><span>32일남음</span> 2023.10.23~2023.1222</p>
-                    </div>
+            <div class="wrap_item">
+
+                <div class="item kakaopay">
+                    <img src="/public/img/common/kakaopay.png" alt="kakaopay">
                 </div>
 
-                <p>무료쿠폰을 신청하고 싶으시다면? <a>쿠폰신청하기</a></p>
-            </div>
-
-            <div class="wrap_amount">
-                <span>결제 예정 금액</span>
-                <span id="amount">8,000원</span>
-            </div>
-
-        </div>
-
-        <div class="middle">
-
-            <p>상담은 언제가 좋으세요?</p>
-            <span>담당 전문가의 확인 후 일정이 결정되요!</span>
-
-            <div class="wrap_time">
-                <div class="time_selected">첫 번째 시간 제안하기</div>
-            </div>
-
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <p>첫 번째 상담일정을 선택해주세요!</p>
-                    <div id="datepicker"></div>
-                    <div class="wrap_time_select">
-                        <!-- <div class="time_select">오후 7:00 ~ 오후 8:00</div> -->
-                    </div>
+                <div class="item tosspayments">
+                    <img src="/public/img/common/tosspayments.png" alt="tosspayments">
                 </div>
+
             </div>
 
-        </div>
-
-        <div class="bottom">
-
-            <p>어떤 내용을 상담하고 싶으신가요? </p>
-            <span>상담 내용을 자세히 기재해주시면 보다 정확한 상담이 가능해요!</span>
-
-            <input type="text" placeholder="제목">
-            <textarea placeholder="내용을 입력해 주세요"></textarea>
-
-        </div>
-
-
-        <div class="wrap_bottom">
-            <button type="button">예약하기</button>
-            <div class="wrap_like">
-                <img src="/public/img/common/like_gray_fill.svg" alt="like_gray_fill">
-                <span>찜하기</span>
-            </div>
-        </div>
+        </section>
 
     </main>
+
+    <button type="button" class="btn_action">결제하기</button>
 
 </body>
 

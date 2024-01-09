@@ -69,7 +69,7 @@ function addLogoutButton() {
                     showConfirmButton: false,
                     timer: 1000,
                 }).then(function(){
-                    location.reload();
+                    location.href='/views/home.html';
                 })
 
                 logoutItem.remove();

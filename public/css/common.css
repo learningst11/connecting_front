@@ -1,5 +1,5 @@
 /* html, body */
-body{position: relative;  height: calc(var(--vh, 1vh) * 100); visibility: collapse; opacity: 0; transition: visibility 1s ease-in, opacity 1s ease-in; } 
+body{position: relative;  height: calc(var(--vh, 1vh) * 100); visibility: collapse; opacity: 0; transition: visibility 2s ease-in, opacity 2s ease-in; } 
 body.loaded { visibility: visible; opacity: 1; } 
 
 /* main */

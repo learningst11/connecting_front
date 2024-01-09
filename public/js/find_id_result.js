@@ -11,6 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         loginButton.setAttribute('onclick', "location.href='/views/sign_up01.html'");
     } else {
         document.querySelector('.id_found').textContent = foundEmail;
-        resetPasswordButton.setAttribute('onclick', "location.href='/views/find_id_new.html'");
+        resetPasswordButton.setAttribute('onclick', "location.href='/views/find_pw_new.html'");
     }
 });

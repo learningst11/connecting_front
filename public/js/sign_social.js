@@ -31,9 +31,9 @@ async function kakaoLogin() {
         const verifyData = await verifyResponse.json();
 
         if (verifyData.code === 200 && verifyData.data.result === "VERIFIED") {
+          sessionStorage.setItem('sns_platform', 'kakao');
           sessionStorage.setItem('email', verifyData.data.email);
           sessionStorage.setItem('action', 'signup');
-          sessionStorage.setItem('sns_platform', 'kakao');
           location.href = "/views/sign_up02.html";
         } else if (verifyData.data.result === "SUCCESS") {
           const authorizeResponse = await fetch("http://43.201.79.49/users/authorize", {

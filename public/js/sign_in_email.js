@@ -50,7 +50,7 @@ async function loginUser() {
         console.log(data);
 
         if (data.code === 200) {
-
+            sessionStorage.setItem('loginMethod', 'email');
             sessionStorage.setItem('access_token', data.data.access_token);
             sessionStorage.setItem('refresh_token', data.data.refresh_token);
             sessionStorage.setItem('user_id', data.data.userId);

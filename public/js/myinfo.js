@@ -84,7 +84,13 @@ async function fetchAndRenderUserInfo() {
         console.log('User Info:', data);
         document.querySelector('.middle p span').textContent = data.data.nickname;
         document.getElementById('nickname').value = data.data.nickname;
-        document.getElementById('phone').value = data.data.mobile;
+
+        if(sessionStorage.getItem('loginMethod' === 'social')){
+            document.querySelector('.pg_myinfo main .bottom .wrap_label label:nth-of-type(2)').style.display = 'none';
+        }else{
+            document.getElementById('phone').value = data.data.mobile;
+        }
+
         document.querySelector('input[placeholder="abc@naver.com"]').value = data.data.email;
 
     } catch (error) {

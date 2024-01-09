@@ -1,3 +1,6 @@
+.pg_list_like .contents{
+    display: none;
+}
 
 .pg_list_like section > span{
     color: var(--gray-gray-03, #999);

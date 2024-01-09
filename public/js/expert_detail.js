@@ -118,32 +118,48 @@ async function renderExpertsDetails(expertsDetail, expertsDetailScore) {
     const introductionItems = document.querySelectorAll(
       ".introduction .wrap01 .wrap_item .item span:nth-of-type(1)"
     );
-    const introductionItemsImg = document.querySelector(".introduction .wrap01 .wrap_item .item:nth-of-type(1) .imgbox img");
-    switch (expertsDetail.field) {
-      case '전략/기획':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_planning.png';
-        break;
-      case '마케팅':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_marketing.png';
-        break;
-      case '프로그래밍':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_programming.png';
-        break;
-      case 'HR':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_hr.png';
-        break;
-      case '창업/N잡':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_startup.png';
-        break;
-      case '디자인':
-        introductionItemsImg.src = '/public/img/expert_detail/introduction01_design.png';
-        break;
-      default:
-        break;
-    }
 
     introductionItems[0].textContent = expertsDetail.field;
     introductionItems[3].textContent = expertsDetail.characteristic;
+
+    const introductionItemsImg1 = document.querySelector(".introduction .wrap01 .wrap_item .item:nth-of-type(1) .imgbox img");
+    switch (expertsDetail.field) {
+      case '전략/기획':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_planning.png';
+        break;
+      case '마케팅':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_marketing.png';
+        break;
+      case '프로그래밍':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_programming.png';
+        break;
+      case 'HR':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_hr.png';
+        break;
+      case '창업/N잡':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_startup.png';
+        break;
+      case '디자인':
+        introductionItemsImg1.src = '/public/img/expert_detail/introduction01_design.png';
+        break;
+
+      default:
+    }
+
+    const introductionItemsImg4 = document.querySelector(".introduction .wrap01 .wrap_item .item:nth-of-type(4) .imgbox img");
+    switch (expertsDetail.characteristic) {
+      case '기업실무자':
+        introductionItemsImg4.src = '/public/img/expert_detail/introduction04_representative.png';
+        break;
+      case '크리에이터':
+        introductionItemsImg4.src = '/public/img/expert_detail/introduction04_creater.png';
+        break;
+      case '교수연구원':
+        introductionItemsImg4.src = '/public/img/expert_detail/introduction04_professor.png';
+        break;
+
+      default:
+    }
 
     const careerElement = document.querySelector(".wrap02 h3");
     careerElement.textContent = expertsDetail.career;
@@ -358,6 +374,6 @@ async function renderExpertsPosts(posts) {
 
 function goToReseravtion() {
 
-  window.location.href = `/views/pay.html?id=${expertId}`;
+  window.location.href = `/views/reservation.html?id=${expertId}`;
 
 }
